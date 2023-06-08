@@ -1,0 +1,84 @@
+
+
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+    <h5 class="modal-title">Filter Debts/Payments</h5>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <form [formGroup]="form">
+
+      <div class="row">
+
+        <div class="form-group col-md-12 position-relative">
+
+          <div class="w-100 position-relative">
+            <label class="form-control-label mb-2" for="patientNameField"><strong>Patient Name</strong></label>
+            <input (keydown)="clear('patientId', 'companyId', 'companyName')" placeholder="Patient Name" maxlength="250" type="text" class="form-control" id="patientNameField" formControlName="patientName"  [ngClass]="{'is-invalid': errorService.getError(form, 'patientName')}">
+            <app-shared-user-autocomplete [userType]="'patient'" (selected)="setPatient($event)" class="position-absolute w-100" [searchWord]="form.get('patientName')?.value"></app-shared-user-autocomplete>
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'patientName')"></app-custom-error-message>
+          </div>
+
+        </div>
+
+        <div class="form-group col-md-12 position-relative">
+
+          <div class="w-100 position-relative">
+            <label class="form-control-label mb-2" for="companyNameField"><strong>Company Name</strong></label>
+            <input (keydown)="clear('companyId', 'patientId', 'patientName')" placeholder="Company Name" maxlength="250" type="text" class="form-control" id="companyNameField" formControlName="companyName"  [ngClass]="{'is-invalid': errorService.getError(form, 'companyName')}">
+            <app-shared-user-autocomplete [userType]="'company'" (selected)="setCompany($event)" class="position-absolute w-100" [searchWord]="form.get('companyName')?.value"></app-shared-user-autocomplete>
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'companyName')"></app-custom-error-message>
+          </div>
+
+        </div>
+
+        <div class="form-group col-md-6">
+          <label class="form-control-label mb-2" for="companyNameField"><strong>Start Date</strong></label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="yyyy-mm-dd"
+              name="dp"
+              formControlName="startDate"
+              ngbDatepicker
+              #d="ngbDatepicker"
+            />
+            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+              <fa-icon [icon]="fonts.faCalendar"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label class="form-control-label mb-2" for="companyNameField"><strong>End Date</strong></label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="yyyy-mm-dd"
+              name="dp"
+              formControlName="endDate"
+              ngbDatepicker
+              #d2="ngbDatepicker"
+            />
+            <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">
+              <fa-icon [icon]="fonts.faCalendar"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+  <div class="modal-footer c-bg-primary justify-content-between">
+    <button (click)="addFilter()" [disabled]="form.invalid" type="button" class="btn btn-primary">Update filter</button>
+    <div>
+      <button (click)="clearForm()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Reset</button>
+      <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

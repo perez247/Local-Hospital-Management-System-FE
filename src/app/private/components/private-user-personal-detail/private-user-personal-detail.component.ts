@@ -35,7 +35,7 @@ export class PrivateUserPersonalDetailComponent extends SharedUtilityComponent i
   userSections = AppConstants.UserSections;
 
   roles = AppRoles;
-  editRoles: string[] = [];
+  editRoles: (string | undefined)[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -68,7 +68,7 @@ export class PrivateUserPersonalDetailComponent extends SharedUtilityComponent i
     {
       this.editRoles = [ this.roles.admin, this.roles.nurse, this.roles.hr ]
     } else {
-      this.editRoles = [ this.roles.admin, this.roles.hr ]
+      this.editRoles = [ this.roles.admin, this.roles.hr, this.user?.base?.id ]
     }
   }
 

@@ -1,0 +1,20 @@
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+      <h5 class="modal-title">View</h5>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <div class="card">
+      <img [src]="fileUrl" class="card-img-top pointer" alt="result_image">
+    </div>
+
+  </div>
+  <div class="modal-footer c-bg-primary justify-content-between">
+    <div>
+      <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

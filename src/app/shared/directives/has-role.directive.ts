@@ -1,16 +1,16 @@
 import { Subscription } from 'rxjs';
-import { SharedUtilityComponent } from './../components/shared-utility/shared-utility.component';
 import { AppUser } from 'src/app/shared/core/models/app-user';
 import { EventBusService } from './../services/common/event-bus/event-bus.service';
 import { Directive, Input, OnInit, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
 import { EventBusActions } from '../services/common/event-bus/event-bus-action';
 
 @Directive({
-  selector: '[appHasRole]'
+  selector: '[appHasRole]',
+  exportAs: 'appHasRole'
 })
 export class HasRoleDirective implements OnInit, OnDestroy {
 
-  @Input() roles: string[] = [];
+  @Input() roles: (string | undefined)[] = [];
   @Input() operator: string = 'or';
 
   currentUser?: AppUser;
@@ -62,8 +62,9 @@ export class HasRoleDirective implements OnInit, OnDestroy {
     }
 
     let hasRole: boolean[] = [];
+    const roles = this.getUserRoles();
     this.roles.forEach(x => {
-      var role = this.currentUser?.userRoles?.find(a => a === x);
+      var role = roles?.find(a => a === x);
       if (role) {
         hasRole.push(true);
       } else {
@@ -85,6 +86,21 @@ export class HasRoleDirective implements OnInit, OnDestroy {
       }
     }
 
+  }
+
+  getUserRoles(): string[]
+  {
+    const roles = this.currentUser?.userRoles || [];
+
+    const id = this.currentUser?.base?.id || ''
+
+    const hasId = roles.find(x => x === id);
+
+    if (!hasId) {
+      roles.push(id);
+    }
+
+    return roles;
   }
 
   hideElement(): void {

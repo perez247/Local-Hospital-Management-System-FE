@@ -11,7 +11,8 @@ export class FilterPatientsModalFunctions {
       isCompany: [filter?.isCompany],
       patientCompanyId: [filter?.patientCompanyId],
       patientCompanyName: [filter?.patientCompanyName],
-      userType: [filter?.userType]
+      userType: [filter?.userType],
+      userSearchId: [filter?.userSearchId],
     });
   }
 

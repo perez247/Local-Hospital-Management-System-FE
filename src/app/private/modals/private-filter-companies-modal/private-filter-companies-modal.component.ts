@@ -12,7 +12,7 @@ import { FilterCompaniesModalFunctions } from "./private-filter-companies-modal-
 })
 export class PrivateFilterCompaniesModalComponent implements OnInit {
 
-  @Input() filter?: UserFilter;
+  @Input() public filter?: UserFilter;
   @Output() newFilter = new EventEmitter<UserFilter>();
 
   form: FormGroup = {} as any;

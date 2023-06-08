@@ -16,11 +16,12 @@ import { AppRoles } from 'src/app/shared/core/models/app-roles';
   templateUrl: './private-patient-vitals.component.html',
   styleUrls: ['./private-patient-vitals.component.scss']
 })
-export class PrivatePatientVitalsComponent extends SharedUtilityComponent  implements OnInit {
+export class PrivatePatientVitalsComponent extends SharedUtilityComponent implements OnInit {
 
   @Output() reload = new EventEmitter<string>();
 
   @Input() user?: AppUser;
+  @Input() isTodayAppointment? = true;
 
   fonts = { faHeartPulse };
 

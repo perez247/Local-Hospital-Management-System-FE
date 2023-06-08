@@ -18,7 +18,7 @@ import { CustomToastService } from 'src/app/shared/services/common/custom-toast/
 })
 export class PrivateSingleTicketComponent extends SharedUtilityComponent implements OnInit {
 
-  fonts = { faTicket }
+  fonts = { faTicket };
 
   routes = ApplicationRoutes.generateRoutes();
 

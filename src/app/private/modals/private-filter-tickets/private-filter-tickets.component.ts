@@ -16,6 +16,7 @@ import { AppUser } from 'src/app/shared/core/models/app-user';
 export class PrivateFilterTicketsComponent implements OnInit {
 
   @Input() filter?: TicketFilter;
+  @Input() keepState?: any = {};
   @Output() newFilter = new EventEmitter<TicketFilter>();
 
   appStatuses: ILookUp[] = [];
@@ -63,6 +64,8 @@ export class PrivateFilterTicketsComponent implements OnInit {
 
   clearForm(): void {
     this.filter = new TicketFilter();
+    const data = this.keepState;
+    this.filter = { ...data  };
     this.initializeForm();
   }
 

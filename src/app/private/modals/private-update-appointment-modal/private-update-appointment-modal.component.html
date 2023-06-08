@@ -22,7 +22,7 @@
               <strong>Doctor's Name</strong>
             </label>
             <input (keydown)="clearDoctor()" placeholder="Name" maxlength="250" type="text" class="form-control" id="firstNameField" formControlName="doctorName"  [ngClass]="{'is-invalid': errorService.getError(form, 'doctorName')}">
-            <app-shared-user-autocomplete [userType]="'staff'" (selected)="updateFormFromAutoComplete($event)" class="position-absolute w-100" [searchWord]="form.get('doctorName')?.value"></app-shared-user-autocomplete>
+            <app-shared-user-autocomplete [userType]="'staff'" [roles]="[roles.doctor]" (selected)="updateFormFromAutoComplete($event)" class="position-absolute w-100" [searchWord]="form.get('doctorName')?.value"></app-shared-user-autocomplete>
             <app-custom-error-message [errorMessage]="errorService.getError(form, 'doctorName')"></app-custom-error-message>
           </div>
 

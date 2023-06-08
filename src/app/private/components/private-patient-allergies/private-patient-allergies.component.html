@@ -4,7 +4,7 @@
         {{allergies?.length ?? 0}}/10000
     </small>
     <div class="my-2">
-        <button appHasRole [roles]="[roles.admin, roles.nurse, roles.doctor]" [operator]="'or'" class="btn btn-info" [disabled]="isLoading" (click)="update()" >
+        <button *ngIf="isTodayAppointment" appHasRole [roles]="[roles.admin, roles.nurse, doctor]" [operator]="'or'" class="btn btn-info" [disabled]="isLoading" (click)="update()" >
             Update
             <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
         </button>

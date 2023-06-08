@@ -3,13 +3,12 @@ import { Base, Company } from "./app-user";
   export class InventoryFilter {
 
     name?: string;
-    appInventoryType?: string;
+    appInventoryType?: string[];
     quantity?: number;
     inventoryId?: string;
   }
 
   export class InventoryItemFilter {
-
     companyId?: string;
     appInventoryId?: string;
     amount?: number;
@@ -26,6 +25,7 @@ import { Base, Company } from "./app-user";
     notifyWhenLow?: boolean
     howLow?: number
     profile?: string
+    id?: string
   }
 
   export class AppInventoryItem {

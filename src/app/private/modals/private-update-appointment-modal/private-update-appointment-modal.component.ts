@@ -10,6 +10,7 @@ import { PrivateUpdateAppointmentModalFunctions } from './private-update-appoint
 import { AppUser } from 'src/app/shared/core/models/app-user';
 import { CustomErrorService } from 'src/app/shared/services/common/custom-error/custom-error.service';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 
 @Component({
   selector: 'app-private-update-appointment-modal',
@@ -24,6 +25,8 @@ export class PrivateUpdateAppointmentModalComponent extends SharedUtilityCompone
   @Output() reload = new EventEmitter();
 
   form: FormGroup = {} as any;
+
+  roles = AppRoles;
 
   fonts = { faCalendar }
 

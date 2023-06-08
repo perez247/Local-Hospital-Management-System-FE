@@ -5,7 +5,7 @@
 
   <div class="d-flex justify-content-between mt-2">
     <div>
-      <button appHasRole [roles]="[roles.admin, roles.doctor]" [operator]="'or'" (click)="saveOverallDescription()" [disabled]="appointment?.overallDescription === editableDescription || isLoading" class="btn btn-sm btn-primary">
+      <button *ngIf="isTodayAppointment" appHasRole [roles]="[roles.admin, appointment?.doctor?.user?.base?.id]" [operator]="'or'" (click)="saveOverallDescription()" [disabled]="appointment?.overallDescription === editableDescription || isLoading" class="btn btn-sm btn-primary">
         Save
         <app-shared-loading *ngIf="isLoading"></app-shared-loading>
       </button>

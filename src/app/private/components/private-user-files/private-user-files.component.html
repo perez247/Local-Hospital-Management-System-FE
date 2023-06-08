@@ -8,7 +8,7 @@
         </div>
 
     </div>
-    <div>
+    <div appHasRole [roles]="[roles.admin, roles.hr, user?.base?.id]">
         <button (click)="openUploadFileModal()" class="btn btn-sm btn-primary">Add Files</button>
     </div>
 </div>
@@ -22,7 +22,7 @@
       <span class="input-group-text bg-primary">
         <fa-icon [icon]="fonts.faFileAlt" class="bg-primary rounded text-white"></fa-icon>
       </span>
-      <button [disabled]="isLoadingFile" (click)="confirmDeleteOfFile(file)" class="btn btn-outline-danger btn-danger text-white" type="button">
+      <button appHasRole [roles]="[roles.admin, roles.hr, user?.base?.id]" [disabled]="isLoadingFile" (click)="confirmDeleteOfFile(file)" class="btn btn-outline-danger btn-danger text-white" type="button">
         <fa-icon [icon]="fonts.faTrash" class="bg-danger rounded text-white"></fa-icon>
       </button>
       <input readonly disabled class="form-control" [value]="file.name" >

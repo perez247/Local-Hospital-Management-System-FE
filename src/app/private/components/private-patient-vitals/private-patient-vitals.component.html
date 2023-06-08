@@ -9,7 +9,7 @@
 
     </div>
     <div>
-        <button appHasRole [roles]="[roles.admin, roles.nurse, roles.doctor]" [operator]="'or'" (click)="openAddVitalModal()" class="btn btn-sm btn-primary">Add Vital</button>
+        <button *ngIf="isTodayAppointment" appHasRole [roles]="[roles.admin, roles.nurse]" [operator]="'or'" (click)="openAddVitalModal()" class="btn btn-sm btn-primary">Add Vital</button>
     </div>
 </div>
 

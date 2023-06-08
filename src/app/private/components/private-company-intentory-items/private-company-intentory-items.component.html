@@ -14,13 +14,14 @@
               Action
           </button>
           <ul class="dropdown-menu" aria-labelledby="more-action">
-            <li><a class="dropdown-item pointer" (click)="addCompanyInventoryItem()">Save Inventory item</a></li>
+            <li
+            appHasRole [roles]="ticketRoles"
+            ><a class="dropdown-item pointer" (click)="addCompanyInventoryItem()">Save Inventory item</a></li>
             <li><a class="dropdown-item pointer" (click)="openFilterInventoryItems()" >Filter</a></li>
           </ul>
         </div>
   </div>
 </div>
-
 
 <section class="bg-light rounded shadow">
   <table class="table table-striped">

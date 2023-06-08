@@ -42,7 +42,8 @@ export class PrivateFinanceContractsComponent extends SharedUtilityComponent imp
   }
 
   override ngOnInit(): void {
-    this.filter.paymentStatus = 'pending';
+    this.filter.paymentStatus = 'owing';
+    this.filter.patient = true;
     this.paginationRequest = new PaginationRequest<FinancialFilter>(this.appPagination, this.filter);
     this.getContracts();
   }
@@ -86,6 +87,7 @@ export class PrivateFinanceContractsComponent extends SharedUtilityComponent imp
 
   addPayment(appCost: AppCost): void {
     const modalRef = this.modalService.open(PrivateAddPaymentModalComponent, { size: 'lg' });
+    modalRef.componentInstance.cost = appCost.approvedPrice;
 
     const sub = modalRef.componentInstance.newPayment.subscribe({
       next: (data: PaymentMade) => {

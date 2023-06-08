@@ -17,7 +17,7 @@ import { SharedUtilityComponent } from '../shared-utility/shared-utility.compone
 export class SharedInventoryAutocompleteComponent extends SharedUtilityComponent implements OnInit {
 
   @Input() searchWord?: string;
-  @Input() filter: InventoryFilter = new InventoryFilter();;
+  @Input() filter: InventoryFilter = new InventoryFilter();
 
   private subject$ = new Subject<string>();
 

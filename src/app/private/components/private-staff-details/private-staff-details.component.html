@@ -3,7 +3,7 @@
 <form [formGroup]="form">
             <fieldset [disabled]=disableForm>
                 <div class="row">
-                    
+
                     <div class="form-group col-6">
 
                         <label class="form-control-label mb-2" for="positionField">
@@ -11,21 +11,21 @@
                         </label>
                         <input placeholder="First Name" maxlength="200" type="text" class="form-control" id="positionField" formControlName="position"  [ngClass]="{'is-invalid': errorService.getError(form, 'position')}">
                         <app-custom-error-message [errorMessage]="errorService.getError(form, 'position')"></app-custom-error-message>
-    
+
                     </div>
-    
+
                     <div class="form-group col-6">
                         <label class="form-control-label mb-2" for="levelField"><strong>Level</strong></label>
                         <input placeholder="Level" maxlength="200" type="text" class="form-control" id="levelField" formControlName="level"  [ngClass]="{'is-invalid': errorService.getError(form, 'level')}">
                         <app-custom-error-message [errorMessage]="errorService.getError(form, 'level')"></app-custom-error-message>
                     </div>
-    
+
                     <div class="form-group col-6">
                         <label class="form-control-label mb-2" for="salaryField"><strong>Salary</strong></label>
                         <input placeholder="Salary" maxlength="200" type="text" class="form-control" id="salaryField" formControlName="salary"  [ngClass]="{'is-invalid': errorService.getError(form, 'salary')}">
                         <app-custom-error-message [errorMessage]="errorService.getError(form, 'salary')"></app-custom-error-message>
                     </div>
-    
+
                     <div class="form-group col-6">
                         <label class="form-control-label mb-2" for="bankNameField"><strong>Local Bank Name</strong></label>
                         <input placeholder="Local Bank Name" maxlength="200" type="text" class="form-control" id="bankNameField" formControlName="bankName"  [ngClass]="{'is-invalid': errorService.getError(form, 'bankName')}">
@@ -43,7 +43,7 @@
                         <input placeholder="Bank Id" maxlength="200" type="text" class="form-control" id="bankIdField" formControlName="bankId"  [ngClass]="{'is-invalid': errorService.getError(form, 'bankId')}">
                         <app-custom-error-message [errorMessage]="errorService.getError(form, 'bankId')"></app-custom-error-message>
                     </div>
-    
+
                     <div class="form-group col-12">
                         <label class="form-control-label mb-2" for="activeField"><strong>Status</strong></label>
                         <select class="form-control" id="activeField" formControlName="active"  [ngClass]="{'is-invalid': errorService.getError(form, 'active')}">
@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-12">
 
-                    <div class="d-flex justify-content-end" *ngIf="disableForm" >
+                    <div appHasRole [roles]="[roles.admin, roles.hr]" [operator]="'or'" class="d-flex justify-content-end" *ngIf="disableForm" >
                         <button (click)="edit()" class="btn btn-primary">Edit</button>
                     </div>
 
@@ -69,7 +69,7 @@
                             Update
                             <app-shared-loading *ngIf="isLoading"></app-shared-loading>
                         </button>
-                        
+
                         <button (click)="cancelEdit()" class="btn btn-danger">Cancel</button>
                     </div>
 

@@ -3,6 +3,7 @@ import { faKitMedical, faNairaSign, faTrash, faPencil } from '@fortawesome/free-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppInventory, AppInventoryItem, InventoryFilter, InventoryItemFilter } from 'src/app/shared/core/models/inventory';
 import { AppPagination, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
@@ -28,6 +29,8 @@ export class PrivateInventoryItemsComponent extends SharedUtilityComponent imple
   filter = new InventoryItemFilter();
   paginationRequest = new PaginationRequest<InventoryItemFilter>(this.appPagination, this.filter);
   paginationResponse = new PaginationResponse<any[]>();
+
+  roles = AppRoles;
 
   constructor(
     private modalService: NgbModal,

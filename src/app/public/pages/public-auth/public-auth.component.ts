@@ -71,7 +71,6 @@ export class PublicAuthComponent extends SharedUtilityComponent implements OnIni
     const sub = this.authService.signIn(this.form.value)
       .pipe(finalize(() => {
         this.isLoading = false;
-        this.loginButton = 'Log in';
       }))
       .subscribe({
         next: async (data) => {
@@ -99,7 +98,6 @@ export class PublicAuthComponent extends SharedUtilityComponent implements OnIni
     const sub = this.userService.getUsers(this.paginationRequest)
       .pipe(finalize(() => {
         this.isLoading = false;
-        this.loginButton = 'Log in';
       }))
       .subscribe({
         next: async (data) => {
@@ -107,9 +105,11 @@ export class PublicAuthComponent extends SharedUtilityComponent implements OnIni
           this.paginationResponse = data;
           this.staff = data.result ?? [];
           await this.eventBus.emit({ key: EventBusActions.state.currentUser, value: this.staff[0] } as EventBusData<AppUser>);
-          this.router.navigate([this.returnUrl])
+          this.router.navigate([this.returnUrl]);
+          setTimeout(() => { this.loginButton = 'Log in'; }, 1000)
         },
         error: (data) => {
+          this.loginButton = 'Log in';
           throw data;
         }
       });

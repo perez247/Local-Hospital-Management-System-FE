@@ -1,0 +1,22 @@
+
+<div class="d-flex justify-content-between p-4 border-bottom mb-3">
+  <span>{{ticketInventory.proof?.length ?? 0}}/5</span>
+  <button
+    [disabled]="ticketInventory.concludedDate || ticketInventory.proof.length === 5"
+    (click)="openUploadProfileModal()"
+    class="btn btn-sm btn-primary">Add image</button>
+</div>
+
+<section class="row">
+
+  <div *ngFor="let proof of ticketInventory.proof; let i = index" class="col-sm-12 col-md-3 mb-3">
+    <div class="card shadow position-relative">
+      <img (click)="viewImage(proof)" [src]="proof" class="card-img-top pointer" alt="result_image">
+      <div *ngIf="!ticketInventory.concludedDate" (click)="removeImage(i)" class="p-2 delete-icon bg-light pointer">
+        <fa-icon class="text-danger" [icon]="fonts.faTrashAlt" ></fa-icon>
+      </div>
+    </div>
+  </div>
+
+</section>
+

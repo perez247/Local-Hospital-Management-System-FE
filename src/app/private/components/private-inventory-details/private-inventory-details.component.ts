@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { AppConstants, ILookUp } from 'src/app/shared/core/models/app-constants';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppInventory } from 'src/app/shared/core/models/inventory';
 import { InventoryService } from 'src/app/shared/services/api/inventory/inventory.service';
 import { CustomErrorService } from 'src/app/shared/services/common/custom-error/custom-error.service';
@@ -36,6 +37,8 @@ export class PrivateInventoryDetailsComponent  extends SharedUtilityComponent im
 
   lookups: ILookUp[] = [];
   lookupType = AppConstants.LookUpType;
+
+  roles = AppRoles;
 
   constructor(
     private route: ActivatedRoute,

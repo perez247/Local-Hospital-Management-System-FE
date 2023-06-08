@@ -84,11 +84,11 @@
   <ngb-panel [id]="userSections.ticketList" *ngIf="ticket.sent">
 
 		<ng-template ngbPanelTitle>
-			Tickets
+			Ticket
 		</ng-template>
 
 		<ng-template ngbPanelContent>
-      <app-private-pharmacy-ticket-list (reload)="getTicket($event)" *ngIf="ticket.appInventoryType === types.pharmacy" [ticket]="ticket" ></app-private-pharmacy-ticket-list>
+      <app-private-ticket-inventories (reload)="getTicket($event)" [ticket]="ticket" ></app-private-ticket-inventories>
     </ng-template>
 
 	</ngb-panel>

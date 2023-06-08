@@ -1,27 +1,24 @@
 <div class="d-flex justify-content-between mb-4">
   <div class="d-flex justify-content-start mb-4 position-relative">
       <span class="p-3 bg-primary position-absolute">
-          <fa-icon [icon]="fonts.faBedPulse" class="pe-1 text-light"></fa-icon>
+          <fa-icon [icon]="fonts.faBedPulse" class="p-1 text-light"></fa-icon>
       </span>
       <div class="placeholder-glow ms-5 ps-3">
-        <span *ngIf="!patient" class="placeholder col-12"></span>
-        <span *ngIf="patient" class="h5 me-1">
+        <span *ngIf="!patient || isLoading" class="placeholder col-12"></span>
+        <span *ngIf="patient && !isLoading" class="h5 me-1">
           {{ patient.firstName }}
           {{ patient.lastName }}
           {{ patient.otherName }}
         </span>
 
-        <app-shared-loading *ngIf="!patient" ></app-shared-loading>
+        <app-shared-loading *ngIf="!patient || isLoading" ></app-shared-loading>
 
         <span class="d-block">
           <span *ngIf="!patient || isLoading" class="placeholder col-6"></span>
-
-          <!-- <small *ngIf="patient" class="text-dark">
-            <button (click)="confirmAddContract()" class="btn btn-primary">Add Contract
-              <app-shared-loading *ngIf="loadingContract" ></app-shared-loading>
-            </button>
-          </small> -->
           <app-private-patient-contract *ngIf="patient && !isLoading" [user]="patient" (reload)="getPatient(currentSection)" (avaliable)="disableTabs = !$event"></app-private-patient-contract>
+          <span *ngIf="patient && !isLoading" class="d-block">
+            {{ patient.base?.id | userId }}
+          </span>
         </span>
       </div>
 
@@ -78,7 +75,7 @@
 		</ng-template>
 
 		<ng-template ngbPanelContent>
-      <app-private-patient-allergies [user]="patient" (reload)="getPatient($event)"></app-private-patient-allergies>
+      <app-private-patient-allergies [patient]="patient.patient" (reload)="getPatient($event)"></app-private-patient-allergies>
 		</ng-template>
 
 	</ngb-panel>

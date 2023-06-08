@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AppTicket } from 'src/app/shared/core/models/app-ticket';
-import { PaginationResponse } from 'src/app/shared/core/models/pagination';
+import { Observable, finalize, Subscription } from 'rxjs';
+import { AppTicket, AppTicketTypes, ITicketInventory, TicketFilter } from 'src/app/shared/core/models/app-ticket';
+import { PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { environment } from 'src/environments/environment';
+import { CustomToastService } from '../../common/custom-toast/custom-toast.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +32,15 @@ export class TicketService {
     return this.http.post<void>(`${this.apiUrl}/send-to-departments`, data);
   }
 
-  sendPharmacyTicketToFinance(data: any): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/send-pharmacy-to-finance`, data);
+  sendTicketsToFinance(data: any, ticketType: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/send-${ticketType}-to-finance`, data);
   }
 
-  concludeTicket(data: any): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/conclude-ticket-inventory`, data);
+  concludeTicket(data: any, ticketType: string): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/conclude-${ticketType}-ticket-inventory`, data);
+  }
+
+  deleteTicket(data: any): Observable<void> {
+    return this.http.request<void>('delete', `${this.apiUrl}/app-ticket`, { body: data });
   }
 }

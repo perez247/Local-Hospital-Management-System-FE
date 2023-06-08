@@ -8,67 +8,48 @@
   </div>
   <div class="modal-body c-bg-secondary">
 
-    <form [formGroup]="form">
+    <div *ngIf="isLoading" class="text-center">
+      <app-shared-loading [size]="'xl'" ></app-shared-loading>
+    </div>
+
+    <form *ngIf="!isLoading" [formGroup]="form">
 
       <div class="row">
+        <h6 class="border-bottom">
+          Pharmacy
+          <fa-icon (click)="saveTicketInventory(null)" [icon]="fonts.faPlusCircle" class="pe-1 pointer text-primary"></fa-icon>
+        </h6>
 
-        <div class="form-group col-md-12 position-relative">
-
-          <div class="w-100 position-relative">
-            <label class="form-control-label mb-2" for="inventoryNameField">
-              <strong>Inventory Name</strong>
-            </label>
-            <input (keydown)="clearInventory()" placeholder="Inventory Name" maxlength="250" type="text" class="form-control" id="inventoryNameField" formControlName="inventoryName"  [ngClass]="{'is-invalid': errorService.getError(form, 'inventoryId')}">
-            <app-shared-inventory-autocomplete [filter]="filter" (selected)="updateInventoryName($event)" class="position-absolute w-100" [searchWord]="form.get('inventoryName')?.value"></app-shared-inventory-autocomplete>
-            <app-custom-error-message [errorMessage]="errorService.getError(form, 'inventoryId')"></app-custom-error-message>
-          </div>
-
-        </div>
-
-        <div class="form-group col-12">
-          <label class="form-control-label mb-2" for="nameField"><strong>Description</strong></label>
-
-          <div class="input-group">
-            <textarea placeholder="Name" maxlength="1000" type="text" class="form-control" id="nameField" formControlName="doctorsPrescription"  [ngClass]="{'is-invalid': errorService.getError(form, 'doctorsPrescription')}"></textarea>
-            <button (click)="addTicketInventory()" [disabled]="!form.get('inventoryName')?.value || !form.get('doctorsPrescription')?.value || (form.get('doctorsPrescription')?.value.length ?? 0) < 3" class="btn btn-sm btn-info">Add</button>
-
-          </div>
-          <app-custom-error-message [errorMessage]="errorService.getError(form, 'doctorsPrescription')"></app-custom-error-message>
-          <div class="text-end">
-            <small>{{form.get('doctorsPrescription')?.value?.length ?? 0}}/1000</small>
-          </div>
-        </div>
-
-
-      </div>
-
-      <div class="py-2 border-bottom scrollable" *ngIf="ticketInventories.length > 0">
-        <div class="card mb-3" *ngFor="let inventory of ticketInventories; let i = index">
-          <div class="card-header">
-            <div class="row">
-              <div class="col-2">
-                <strong>Item</strong>
-              </div>
-              <div class="col-10 position-relative">
-                {{ inventory.inventoryName}}
-                <span class="deleteIcon" (click)="removeTicketInventory(i)"><fa-icon [icon]="fonts.faTrashAlt" class="pe-1 pointer text-danger"></fa-icon></span>
+        <div class="py-2 border-bottom scrollable" *ngIf="ticketInventories.length > 0">
+          <div class="card mb-3" *ngFor="let inventory of ticketInventories; let i = index">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-2">
+                  <strong>Item</strong>
+                </div>
+                <div class="col-10 position-relative">
+                  {{ inventory.inventoryName}}
+                  <span class="deleteIcon" (click)="removeTicketInventory(i)"><fa-icon [icon]="fonts.faTrashAlt" class="pe-1 pointer text-danger"></fa-icon></span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="card-header">
-            <div class="row">
-              <div class="col-2">
-                <strong>Prescription</strong>
-              </div>
-              <div class="col-10">
-                {{ inventory.doctorsPrescription}}
+            <div class="card-header">
+              <div class="row">
+                <div class="col-2">
+                  <strong>Prescription</strong>
+                </div>
+                <div class="col-10">
+                  {{ inventory.doctorsPrescription }}
+                  <span class="deleteIcon" (click)="saveTicketInventory(inventory)"><fa-icon [icon]="fonts.faPen" class="pe-1 pointer text-primary"></fa-icon></span>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
       </div>
 
-      <div class="row mt-3 border-top pt-3">
+      <div class="row mt-3 border-top pt-3" *ngIf="ticketInventories.length > 0">
         <div class="form-group col-12">
           <label class="form-control-label mb-2" for="overallDescriptionField"><strong>Overal Description</strong></label>
           <textarea placeholder="Overal Description of the list of pharmacy prescribed" maxlength="1000" type="text" class="form-control" id="overallDescriptionField" formControlName="overallDescription"  [ngClass]="{'is-invalid': errorService.getError(form, 'overallDescription')}"></textarea>

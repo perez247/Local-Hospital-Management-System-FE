@@ -22,7 +22,7 @@
   <div class="row mt-3">
     <div class="col-12">
 
-        <div class="d-flex justify-content-end" *ngIf="disableForm" >
+        <div appHasRole [roles]="[rolesAccess.admin, rolesAccess.hr]" class="d-flex justify-content-end" *ngIf="disableForm" >
             <button (click)="edit()" class="btn btn-primary">Edit</button>
         </div>
 

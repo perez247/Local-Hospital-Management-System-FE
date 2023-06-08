@@ -21,5 +21,13 @@ export class AppAppointment {
   company?: Company
   patient?: Patient
   doctor?: Staff
-  overallDescription?: string
+  overallDescription?: string;
+
+  constructor(data: Partial<AppAppointment>) {
+    Object.assign(this, data);
+  }
+
+  isToday(): boolean {
+    return new Date().toDateString() === new Date(this.appointmentDate ?? '').toDateString()
+  }
 }

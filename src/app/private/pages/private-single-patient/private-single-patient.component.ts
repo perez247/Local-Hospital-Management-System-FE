@@ -65,7 +65,6 @@ export class PrivateSinglePatientComponent extends SharedUtilityComponent  imple
           this.patients = data.result ?? [];
           this.patient = this.patients[0];
 
-
         },
         error: (data) => {
           console.log(data);

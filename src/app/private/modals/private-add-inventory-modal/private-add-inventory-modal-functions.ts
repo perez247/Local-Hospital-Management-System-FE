@@ -8,7 +8,8 @@ export class AddInventoryModalFunctions {
       name: [null, [CustomValidator.CustomRequired('Name'), CustomValidator.MaxLength(200)]],
       appInventoryType: [null, [CustomValidator.CustomRequired('Inventory type'), CustomValidator.MaxLength(200)]],
       notifyWhenLow: [false],
-      howLow: [10]
+      howLow: [10],
+      quantity: [0],
     });
   }
 }

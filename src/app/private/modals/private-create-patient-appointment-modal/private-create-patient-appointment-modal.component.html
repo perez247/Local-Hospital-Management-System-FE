@@ -35,7 +35,7 @@
                       <strong>Doctor</strong>
                     </label>
                     <input (keydown)="clearDoctor()" placeholder="Search for doctor" maxlength="250" type="text" class="form-control" id="doctorField" formControlName="doctorName"  [ngClass]="{'is-invalid': errorService.getError(form, 'doctorId')}">
-                    <app-shared-user-autocomplete [userType]="'staff'" (selected)="addDoctor($event)" class="position-absolute w-100" [searchWord]="form.get('doctorName')?.value"></app-shared-user-autocomplete>
+                    <app-shared-user-autocomplete [userType]="'staff'" [roles]="['doctor']" (selected)="addDoctor($event)" class="position-absolute w-100" [searchWord]="form.get('doctorName')?.value"></app-shared-user-autocomplete>
                     <app-custom-error-message [errorMessage]="errorService.getError(form, 'doctorId')"></app-custom-error-message>
                   </div>
 

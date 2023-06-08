@@ -4,24 +4,21 @@
             <fa-icon [icon]="fonts.faBedPulse" class="pe-1 text-light"></fa-icon>
         </span>
         <div  class="placeholder-glow ms-5 ps-3">
-          <span *ngIf="!staffItem" class="placeholder col-12"></span>
-          <span *ngIf="staffItem" class="h5 me-1">
+          <span *ngIf="!staffItem || isLoading" class="placeholder col-12"></span>
+          <span *ngIf="staffItem && !isLoading" class="h5 me-1">
             {{ staffItem.firstName }}
             {{ staffItem.lastName }}
             {{ staffItem.otherName }}
           </span>
 
-          <app-shared-loading *ngIf="!staffItem" ></app-shared-loading>
+          <app-shared-loading *ngIf="!staffItem || isLoading" ></app-shared-loading>
 
           <span class="d-block">
-            <span *ngIf="!staffItem" class="placeholder col-6"></span>
-            <small *ngIf="staffItem"> {{ staffItem.staff?.position }} </small>
-
-            <!-- <small *ngIf="patient" class="text-dark">
-              <button (click)="confirmAddContract()" class="btn btn-primary">Add Contract
-                <app-shared-loading *ngIf="loadingContract" ></app-shared-loading>
-              </button>
-            </small> -->
+            <span *ngIf="!staffItem || isLoading" class="placeholder col-6"></span>
+            <span *ngIf="staffItem && !isLoading"> {{ staffItem.staff?.position }} </span>
+            <span *ngIf="staffItem && !isLoading" class="d-block">
+              {{ staffItem.base?.id | userId }}
+            </span>
           </span>
         </div>
 

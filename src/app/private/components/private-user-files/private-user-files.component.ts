@@ -1,3 +1,4 @@
+import { AppFileService } from '../../../shared/services/common/app-file/app-file.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { faFileAlt, faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +15,7 @@ import { CustomToastService } from 'src/app/shared/services/common/custom-toast/
 import { saveAs } from 'file-saver';
 import { IConfirmAction, SharedConfirmActionModalComponent } from 'src/app/shared/modals/shared-confirm-action-modal/shared-confirm-action-modal.component';
 import { PrivateUploadFilesModalComponent } from '../../modals/private-upload-files-modal/private-upload-files-modal.component';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 
 @Component({
   selector: 'app-private-user-files',
@@ -34,12 +36,15 @@ export class PrivateUserFilesComponent extends SharedUtilityComponent implements
 
   isLoadingFile = false;
 
+  roles = AppRoles;
+
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
     public errorService: CustomErrorService,
     private modalService: NgbModal,
     private toast: CustomToastService,
+    private appFileService: AppFileService,
     ) {
     super();
   }
@@ -86,9 +91,9 @@ export class PrivateUserFilesComponent extends SharedUtilityComponent implements
   }
 
   private beginDownload(userFile: UserFile) {
-    const file = UtilityHelpers.dataURLtoFile(userFile.base64String ?? '', userFile.name ?? '')
-    saveAs(file, userFile.name);
+    this.appFileService.download(userFile);
   }
+
   openUploadFileModal(): void {
     const modalRef = this.modalService.open(PrivateUploadFilesModalComponent, { size: 'lg'});
     modalRef.componentInstance.total = 5;

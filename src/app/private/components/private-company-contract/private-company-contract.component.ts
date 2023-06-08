@@ -28,6 +28,7 @@ export class PrivateCompanyContractComponent extends SharedUtilityComponent impl
   companyId?: string;
 
   forIndividual = false;
+  homeCompany = false;
   hasContract = true;
   hasApproved = true;
   expired = false;
@@ -60,7 +61,19 @@ export class PrivateCompanyContractComponent extends SharedUtilityComponent impl
   setValues(): void {
 
     if (this.user?.company?.forIndividual) {
+      this.homeCompany = true;
       this.forIndividual = true;
+
+      this.avaliable.emit(true);
+      return;
+    }
+
+    if (this.user?.company?.homeCompany) {
+      this.homeCompany = true;
+      this.forIndividual = true;
+
+      this.avaliable.emit(true);
+      return;
     }
 
     this.setContract(this.user?.company?.companyContract);
@@ -77,7 +90,7 @@ export class PrivateCompanyContractComponent extends SharedUtilityComponent impl
       return;
     }
 
-    if (contract.appCost.paymentStatus != 'approved') {
+    if (contract.appCost.paymentStatus != 'approved' && contract.appCost.paymentStatus != 'owing') {
       this.hasApproved = false;
       return;
     }

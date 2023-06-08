@@ -9,6 +9,7 @@ import { SharedUtilityComponent } from "src/app/shared/components/shared-utility
 import { AppUser } from "src/app/shared/core/models/app-user";
 import { ApplicationRoutes } from "src/app/shared/core/routes/app-routes";
 import { AppointmentService } from "src/app/shared/services/api/appointment/appointment.service";
+import { AppFileService } from "src/app/shared/services/common/app-file/app-file.service";
 import { CustomErrorService } from "src/app/shared/services/common/custom-error/custom-error.service";
 import { CustomToastService } from "src/app/shared/services/common/custom-toast/custom-toast.service";
 import { CreatePatientAppoitmentModalFunctions } from "./private-create-patient-appointment-modal-functions";
@@ -34,7 +35,8 @@ export class PrivateCreatePatientAppointmentModalComponent extends SharedUtility
     public errorService: CustomErrorService,
     private appointmentService: AppointmentService,
     private router: Router,
-    private toast: CustomToastService
+    private toast: CustomToastService,
+    private appFileService: AppFileService
   ) {
     super();
   }
@@ -94,12 +96,19 @@ export class PrivateCreatePatientAppointmentModalComponent extends SharedUtility
     this.isLoading = true;
     const data = this.form.value;
     let d = {...data};
-    const appointmentDate = moment(d.appointmentDate).add(d.appointmentTime.hours);
+    const appointmentDate = moment(d.appointmentDate).toDate();
+    appointmentDate.setHours(d.appointmentTime.hour);
+    appointmentDate.setMinutes(d.appointmentTime.minute);
+
     d.appointmentDate = appointmentDate;
     const sub = this.appointmentService.createPatientAppointment(d)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
-        next: (data) => {
+        next: (data: any) => {
+
+          if (data.password && data.password.length > 2) {
+            this.appFileService.downloadAsCSV(data, 'user_credentials.csv');
+          }
           this.toast.success("Patient Appointment created successfully");
           this.router.navigate([`/`+ this.routes.privateRoute.single_appointment(data.appointmentId).$absolutePath]);
           this.activeModal.close();

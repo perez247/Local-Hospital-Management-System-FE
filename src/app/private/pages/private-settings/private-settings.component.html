@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-between mb-5">
+  <div class="d-flex justify-content-start mb-4 position-relative">
+      <span class="p-3 bg-primary position-absolute">
+          <fa-icon [icon]="fonts.faCog" class="p-1 text-light"></fa-icon>
+      </span>
+      <div class="placeholder-glow ms-5 ps-3">
+        <span class="h3 me-1">Settings</span>
+        <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+      </div>
+  </div>
+</div>
+
+<ngb-accordion *ngIf="settings && settings.length > 0 && !isLoading" [closeOthers]="true" [activeIds]="currentSection">
+
+	<ngb-panel [id]="userSections.settingBilling">
+
+		<ng-template ngbPanelTitle>
+			Billings
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-billing-setting [setting]="billSetting" (reload)="getSettings($event)" ></app-private-billing-setting>
+		</ng-template>
+
+	</ngb-panel>
+
+</ngb-accordion>

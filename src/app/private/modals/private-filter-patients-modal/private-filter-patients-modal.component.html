@@ -19,6 +19,11 @@
                   <app-custom-error-message [errorMessage]="errorService.getError(form, 'name')"></app-custom-error-message>
                 </div>
 
+                <div class="form-group col-12">
+                  <label class="form-control-label mb-2" for="userSearchIdField"><strong>Patient Id</strong></label>
+                  <input placeholder="Name" maxlength="250" type="text" class="form-control" id="userSearchIdField" formControlName="userSearchId"  [ngClass]="{'is-invalid': errorService.getError(form, 'userSearchId')}">
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'userSearchId')"></app-custom-error-message>
+                </div>
 
                 <div class="form-group col-md-12 position-relative">
 

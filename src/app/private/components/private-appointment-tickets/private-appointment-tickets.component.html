@@ -1,132 +1,20 @@
 
+<section class="row">
 
+  <div class="position-relative">
+    <div class="dropdown">
+        <button [disabled]="isLoading" class="btn btn-primary btn-sm text-white dropdown-toggle" type="button" id="more-action" data-bs-toggle="dropdown" aria-expanded="false">
+          <fa-icon [icon]="fonts.faFilter" class="pe-1 text-light"></fa-icon>
+          <span *ngIf="!isLoading" >{{ displayed.length }}</span>
+          <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+        </button>
+        <ul class="dropdown-menu pointer" aria-labelledby="more-action">
+          <li><a class="dropdown-item" (click)="addFilter('all')" >all</a></li>
+          <li *ngFor="let ticketType of ticketTypes" ><a class="dropdown-item" (click)="addFilter(ticketType)" >{{ticketType}}</a></li>
+        </ul>
+      </div>
+  </div>
 
-<ngb-accordion *ngIf="!isLoading" [activeIds]="currentSection">
+  <app-private-ticket-inventory-template *ngFor="let tick of displayed; trackBy:ticketTrackBy" [ticket]="tick" [appointment]="appointment" [type]="userSections.ticketList" (reload)="getTickets()"></app-private-ticket-inventory-template>
 
-  <ngb-panel [id]="userSections.vitals">
-
-		<ng-template ngbPanelTitle>
-			Vitals
-		</ng-template>
-
-		<ng-template ngbPanelContent>
-      <app-private-patient-vitals [user]="appointment?.patient?.user" (reload)="getTickets($event)"></app-private-patient-vitals>
-		</ng-template>
-
-	</ngb-panel>
-
-  <ngb-panel [id]="userSections.allergies">
-
-		<ng-template ngbPanelTitle>
-			Allergies
-		</ng-template>
-
-		<ng-template ngbPanelContent>
-      <app-private-patient-allergies [user]="appointment?.patient?.user" (reload)="getTickets($event)"></app-private-patient-allergies>
-		</ng-template>
-
-	</ngb-panel>
-
-  <ngb-panel [id]="userSections.overallAppointmentDescription">
-
-		<ng-template ngbPanelTitle>
-			Overall Appointment Description
-		</ng-template>
-
-		<ng-template ngbPanelContent>
-      <app-private-appointment-overall-description [appointment]="appointment" [canEdit]="true"></app-private-appointment-overall-description>
-		</ng-template>
-
-	</ngb-panel>
-
-  <ngb-panel [id]="userSections.tickets.pharmacy" >
-
-		<ng-template ngbPanelTitle>
-			Pharmacy - {{pharmacies?.length}}
-		</ng-template>
-
-		<ng-template ngbPanelContent>
-
-      <section class="row">
-
-        <app-private-ticket-inventory-template *ngFor="let pharmacy of pharmacies; trackBy:ticketTrackBy" [ticket]="pharmacy" [type]="userSections.tickets.pharmacy"></app-private-ticket-inventory-template>
-
-      </section>
-
-    </ng-template>
-
-	</ngb-panel>
-
-  <!-- <ngb-panel [id]="userSections.tickets.surgery" >
-
-		<ng-template ngbPanelTitle>
-			Surgery - {{surgeries?.length}}
-		</ng-template>
-
-		<ng-template ngbPanelContent>
-
-      <section class="row">
-
-        <app-private-ticket-inventory-template *ngFor="let surgery of surgeries; trackBy:ticketTrackBy" [ticket]="surgery" [type]="userSections.tickets.surgery"></app-private-ticket-inventory-template>
-
-      </section>
-
-    </ng-template>
-
-	</ngb-panel>
-
-  <ngb-panel [id]="userSections.tickets.lab" >
-
-		<ng-template ngbPanelTitle>
-			Lab - {{labs?.length}}
-		</ng-template>
-
-		<ng-template ngbPanelContent>
-
-      <section class="row">
-
-        <app-private-ticket-inventory-template *ngFor="let lab of labs; trackBy:ticketTrackBy" [ticket]="lab" [type]="userSections.tickets.lab"></app-private-ticket-inventory-template>
-
-      </section>
-
-    </ng-template>
-
-	</ngb-panel>
-
-  <ngb-panel [id]="userSections.tickets.radiology" >
-
-		<ng-template ngbPanelTitle>
-			Radiology - {{radiologies?.length}}
-		</ng-template>
-
-		<ng-template ngbPanelContent>
-
-      <section class="row">
-
-        <app-private-ticket-inventory-template *ngFor="let radiology of radiologies; trackBy:ticketTrackBy" [ticket]="radiology" [type]="userSections.tickets.radiology"></app-private-ticket-inventory-template>
-
-      </section>
-
-    </ng-template>
-
-	</ngb-panel>
-
-  <ngb-panel [id]="userSections.tickets.admission" >
-
-		<ng-template ngbPanelTitle>
-			Admission - {{admissions?.length}}
-		</ng-template>
-
-		<ng-template ngbPanelContent>
-
-      <section class="row">
-
-        <app-private-ticket-inventory-template *ngFor="let admission of admissions; trackBy:ticketTrackBy" [ticket]="admission" [type]="userSections.tickets.admission"></app-private-ticket-inventory-template>
-
-      </section>
-
-    </ng-template>
-
-	</ngb-panel> -->
-
-</ngb-accordion>
+</section>

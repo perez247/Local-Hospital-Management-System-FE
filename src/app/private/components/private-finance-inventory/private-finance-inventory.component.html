@@ -25,16 +25,16 @@
         <strong>Payer</strong>
       </div>
       <div class="col-10">
-        <span *ngIf="ticket.patientPaying">
-          <a [routerLink]="['/' + routes.privateRoute.single_patient(ticket.patientPaying.user?.base?.id).$absolutePath]" >
-            {{ticket.patientPaying.user?.firstName}}
-            {{ticket.patientPaying.user?.lastName}}
-            {{ticket.patientPaying.user?.otherName}}
+        <span *ngIf="payer?.isPatient">
+          <a [routerLink]="['/' + routes.privateRoute.single_patient(payer?.base?.id).$absolutePath]" >
+            {{payer?.firstName}}
+            {{payer?.lastName}}
+            {{payer?.otherName}}
           </a>
         </span>
-        <span *ngIf="ticket.companyPaying">
-          <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(ticket.companyPaying.user?.base?.id).$absolutePath]">
-            {{ticket.companyPaying.name}}
+        <span *ngIf="payer?.isCompany">
+          <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(payer?.base?.id).$absolutePath]">
+            {{payer?.firstName}}
           </a>
         </span>
       </div>
@@ -83,8 +83,8 @@
       <div class="col-10">
         {{ ticket.cost.paymentStatus }}
         <span *ngIf="currentOwing > 0" > - {{currentOwing | currency: 'N'}}
-          <span *ngIf="ticket.patientPaying" class="ms-2"> <button (click)="addPayment()" class="btn btn-sm btn-primary"><small>Add payment</small></button> </span>
-          <span *ngIf="ticket.companyPaying" class="ms-2"> An invoice will be sent to the company </span>
+          <span *ngIf="payer?.isPatient && ticket?.cost?.paymentStatus !== 'approved'" class="ms-2"> <button (click)="addPayment()" class="btn btn-sm btn-primary"><small>Add payment</small></button> </span>
+          <span *ngIf="payer?.isCompany" class="ms-2"> An invoice will be sent to the company </span>
         </span>
       </div>
     </div>
@@ -123,7 +123,7 @@
 </div>
 
 <div class="mt-4 text-end">
-  <button *ngIf="ticket.patientPaying && currentOwing > 0" [disabled]="payments.length <= 0" (click)="updatePayment()" class="btn btn-sm btn-primary">
+  <button *ngIf="payer?.isPatient && currentOwing > 0" [disabled]="payments.length <= 0" (click)="updatePayment()" class="btn btn-sm btn-primary">
     Update payment
     <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
   </button>

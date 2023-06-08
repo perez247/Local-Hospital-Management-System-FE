@@ -1,0 +1,7 @@
+
+
+<angular-editor maxlength="10000" [placeholder]="'Enter results here...'" [(ngModel)]="ticketInventory.labRadiologyTestResult" [config]="editorConfig"></angular-editor>
+<small class="d-block text-end">
+    {{ticketInventory.labRadiologyTestResult?.length ?? 0}}/10000
+</small>
+

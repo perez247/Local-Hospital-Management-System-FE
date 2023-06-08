@@ -45,6 +45,8 @@ export class PrivateSingleStaffComponent extends SharedUtilityComponent  impleme
   }
 
   override ngOnInit(): void {
+    console.log(this.route.snapshot.parent?.url);
+
     const id = this.route.snapshot.paramMap.get('id') ?? '';
     this.filter.userId = id;
     this.paginationRequest = new PaginationRequest<UserFilter>(this.appPagination, this.filter);

@@ -14,6 +14,7 @@ export class SharedUserAutocompleteComponent  extends SharedUtilityComponent imp
 
   @Input() searchWord?: string;
   @Input() userType?: string;
+  @Input() roles?: string[];
   @ViewChild('myDrop') title: any;
   @Output() selected = new EventEmitter<AppUser>();
 
@@ -35,6 +36,7 @@ export class SharedUserAutocompleteComponent  extends SharedUtilityComponent imp
 
   override ngOnInit(): void {
   this.setFilter();
+  this.filter.roles = this.roles || [];
   this.paginationRequest = new PaginationRequest<UserFilter>(this.appPagination, this.filter);
     this.checkForChanges();
   }
@@ -87,6 +89,7 @@ export class SharedUserAutocompleteComponent  extends SharedUtilityComponent imp
   }
 
   selectedStaff(selectedStaff: AppUser): void {
+    selectedStaff.otherName = selectedStaff.otherName || '';
     this.selected.emit(selectedStaff);
     this.userList = [];
 

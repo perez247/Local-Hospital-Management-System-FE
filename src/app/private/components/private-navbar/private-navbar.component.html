@@ -1,6 +1,6 @@
 
 
-  <div class="d-flex justify-content-between mb-4 position-fixed py-3 px-5 appnavbar border-bottom bg-white w-100">
+  <div class="d-flex justify-content-between mb-4 position-fixed py-3 px-5 appnavbar border-bottom bg-primary w-100">
     <div class="img-div position-relative">
       <button (click)="toogleMenu()" [disabled]="disableMenu" class="btn btn-white shadow menu-toggler bg-white" [ngClass]="{'close': !menuOpened}">
         <fa-icon *ngIf="!menuOpened" [icon]="fonts.faHamburger" class="text-dark pointer"></fa-icon>

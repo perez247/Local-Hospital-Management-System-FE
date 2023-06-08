@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-between mb-4">
+  <div class="d-flex justify-content-start mb-4 position-relative">
+      <span class="p-3 bg-primary shadow position-absolute">
+          <fa-icon [icon]="fonts.faHandHoldingDollar" class="pe-1 text-light"></fa-icon>
+      </span>
+      <div class="ms-5 ps-3">
+        <span class="h3 me-1">Paid</span>
+        <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+        <small class="d-block text-dark">{{paginationResponse.totalItems}}</small>
+      </div>
+
+  </div>
+  <div>
+      <div class="dropdown">
+          <button class="btn btn-primary btn-sm text-white dropdown-toggle" type="button" id="more-action" data-bs-toggle="dropdown" aria-expanded="false">
+              Action
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="more-action">
+            <li><a class="dropdown-item pointer" (click)="openFilter()" >Filter</a></li>
+          </ul>
+        </div>
+  </div>
+</div>
+
+<section class="bg-light rounded shadow">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <!-- <th scope="col">&nbsp;</th> -->
+        <th scope="col">Name</th>
+        <th scope="col">Payment Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pay of paid">
+        <td>
+          <div *ngFor="let payerPayee of pay?.payerPayee">
+            <div *ngIf="payerPayee.payer" class="d-flex justify-content-start">
+              <div>
+                <img appDisplayProfileImage [imgSrc]="payerPayee?.appUser?.profile" class="img-fluid m-auto mini-profile rounded-circle">
+              </div>
+              <div class="ps-2">
+                <a *ngIf="payerPayee.appUser.isCompany" [routerLink]="['/' + routes.privateRoute.single_company(payerPayee?.appUser?.base?.id).$absolutePath]">
+                  {{ payerPayee?.appUser?.firstName }}
+                </a>
+                <a *ngIf="payerPayee.appUser.isPatient" [routerLink]="['/' + routes.privateRoute.single_patient(payerPayee?.appUser?.base?.id).$absolutePath]">
+                  {{ payerPayee?.appUser?.lastName }} {{ payerPayee?.appUser?.firstName }}
+                </a>
+                <span class="d-block">
+                  {{ payerPayee?.appUser?.base?.id | userId }}
+                </span>
+                <span class="d-block">
+                  {{ pay.base?.dateCreated | date : 'short' }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <small class="d-block"><strong>Cost: </strong><span>{{ pay?.amount | currency: 'N' }}</span></small>
+          <small class="d-block"><strong>Concluded amount: </strong><span>{{ pay?.approvedPrice | currency: 'N' }}</span></small>
+          <small class="d-block"><strong>Total number of items: </strong><span> {{ pay?.totalAppCosts }}  </span></small>
+          <small class="d-block"><strong>Cost type: </strong><span> {{ pay?.costType }}  </span></small>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <ngb-pagination
+    [(page)]="paginationResponse.pageNumber"
+    [pageSize]="paginationResponse.pageSize"
+    [collectionSize]="paginationResponse.totalItems"
+    (pageChange)="pageChanged($event)"
+    >
+  </ngb-pagination>
+</section>

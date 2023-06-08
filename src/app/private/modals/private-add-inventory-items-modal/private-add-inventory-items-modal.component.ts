@@ -23,7 +23,8 @@ export class PrivateAddInventoryItemsModalComponent implements OnInit {
 
   constructor(
     public activeModal: NgbActiveModal,
-    public errorService: CustomErrorService    ) { }
+    public errorService: CustomErrorService
+    ) { }
 
   ngOnInit(): void {
   }

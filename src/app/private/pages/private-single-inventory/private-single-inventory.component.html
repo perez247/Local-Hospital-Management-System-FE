@@ -45,6 +45,19 @@
 
 	</ngb-panel>
 
+  <ngb-panel [id]="userSections.inventoryDependencies" [disabled]="disableTabs">
+
+		<ng-template ngbPanelTitle>
+			Inventory Dependencies
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-inventory-dependencies [inventory]="inventory" (reload)="getInventories($event)"></app-private-inventory-dependencies>
+		</ng-template>
+
+	</ngb-panel>
+
+
   <ngb-panel [id]="userSections.inventoryItems" [disabled]="disableTabs">
 
 		<ng-template ngbPanelTitle>

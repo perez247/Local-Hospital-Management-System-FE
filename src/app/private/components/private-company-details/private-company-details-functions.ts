@@ -12,6 +12,7 @@ export class CompanyDetailFunctions {
         description: [appUser?.company?.description, [CustomValidator.MaxLength(2000)]],
         uniqueId: [appUser?.company?.uniqueId, [CustomValidator.MaxLength(2000)]],
         forIndividual: [appUser?.company?.forIndividual],
+        homeCompany: [appUser?.company?.homeCompany],
         otherId: [appUser?.company?.otherId, [CustomValidator.MaxLength(2000)]],
         profile: [appUser?.profile],
         companyId: [appUser?.company?.base?.id]

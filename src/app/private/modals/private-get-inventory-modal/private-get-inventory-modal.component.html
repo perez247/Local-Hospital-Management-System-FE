@@ -1,0 +1,54 @@
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+    <h5 class="modal-title">Get Ticket Inventory</h5>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <form [formGroup]="form">
+
+      <div class="row">
+
+        <div class="form-group col-md-12 position-relative">
+
+          <div class="w-100 position-relative">
+            <label class="form-control-label mb-2" for="inventoryNameField">
+              <strong>Inventory Name</strong>
+            </label>
+            <input (keydown)="clearInventory()" placeholder="Inventory Name" maxlength="250" type="text" class="form-control" id="inventoryNameField" formControlName="inventoryName"  [ngClass]="{'is-invalid': errorService.getError(form, 'inventoryId')}">
+            <app-shared-inventory-autocomplete [filter]="filter" (selected)="updateInventoryName($event)" class="position-absolute w-100" [searchWord]="form.get('inventoryName')?.value"></app-shared-inventory-autocomplete>
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'inventoryId')"></app-custom-error-message>
+          </div>
+
+        </div>
+
+        <div class="form-group col-12">
+          <label class="form-control-label mb-2" for="nameField"><strong>Description</strong></label>
+
+          <div class="input-group">
+            <textarea placeholder="Name" maxlength="1000" type="text" class="form-control" id="nameField" formControlName="doctorsPrescription"  [ngClass]="{'is-invalid': errorService.getError(form, 'doctorsPrescription')}"></textarea>
+          </div>
+          <app-custom-error-message [errorMessage]="errorService.getError(form, 'doctorsPrescription')"></app-custom-error-message>
+          <div class="text-end">
+            <small>{{form.get('doctorsPrescription')?.value?.length ?? 0}}/1000</small>
+          </div>
+        </div>
+
+      </div>
+
+    </form>
+
+
+  </div>
+  <div class="modal-footer c-bg-primary justify-content-between">
+    <button [disabled]="form.invalid" (click)="save()" type="button" class="btn btn-primary">
+      Save
+    </button>
+    <div>
+      <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+

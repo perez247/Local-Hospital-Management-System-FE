@@ -79,7 +79,12 @@ export class PrivatePatientContractComponent extends SharedUtilityComponent impl
       return;
     }
 
-    if (contract.appCost.paymentStatus != 'approved') {
+    if (contract.appCost.patientContract && contract.appCost.paymentStatus != 'approved') {
+      this.hasApproved = false;
+      return;
+    }
+
+    if (contract.appCost.paymentStatus != 'approved' && contract.appCost.paymentStatus != 'owing') {
       this.hasApproved = false;
       return;
     }

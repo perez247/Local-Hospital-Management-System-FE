@@ -15,7 +15,7 @@ export class CustomToastService {
 
 
   toastConfig: ICustomToast = {
-    delay: 5000
+    delay: 25000
   } as ICustomToast;
 
   toasts: ICustomToast[] = [];

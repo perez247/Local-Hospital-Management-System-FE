@@ -10,7 +10,7 @@
       </div>
 
   </div>
-  <div>
+  <!-- <div>
       <div class="dropdown">
           <button class="btn btn-primary btn-sm text-white dropdown-toggle" type="button" id="more-action" data-bs-toggle="dropdown" aria-expanded="false">
               Action
@@ -19,7 +19,7 @@
             <li><a (click)="openFilterTicketModal()" class="dropdown-item pointer" >Filter</a></li>
           </ul>
         </div>
-  </div>
+  </div> -->
 </div>
 
 <section class="p-2 my-2 shadow">
@@ -40,34 +40,31 @@
           <div class="d-block" *ngIf="contract.patientContract">
 
             &nbsp;
-            <img appDisplayProfileImage [imgSrc]="contract.patientContract.patient?.user?.profile" class="float-start img-fluid m-auto mini-profile rounded-circle">
+            <img appDisplayProfileImage [imgSrc]="contract.patientContractObj.patient?.user?.profile" class="float-start img-fluid m-auto mini-profile rounded-circle">
 
             <span class="float-start ps-2">
-              <a [routerLink]="['/' + routes.privateRoute.single_patient(contract.patientContract.patient?.user?.base?.id).$absolutePath]" >
-                {{contract.patientContract.patient?.user?.firstName}}
-                {{contract.patientContract.patient?.user?.lastName}}
-                {{contract.patientContract.patient?.user?.otherName}}
+              <a [routerLink]="['/' + routes.privateRoute.single_patient(contract.patientContractObj.patient?.user?.base?.id).$absolutePath]" >
+                {{contract.patientContractObj.patient?.user?.firstName}}
+                {{contract.patientContractObj.patient?.user?.lastName}}
+                {{contract.patientContractObj.patient?.user?.otherName}}
               </a>
             </span>
           </div>
 
           <span class="d-block" *ngIf="contract.companyContract">
             &nbsp;
-            <img appDisplayProfileImage [imgSrc]="contract.companyContract.company?.user?.profile" class="float-start img-fluid m-auto mini-profile rounded-circle">
+            <img appDisplayProfileImage [imgSrc]="contract.companyContractObj.company?.user?.profile" class="float-start img-fluid m-auto mini-profile rounded-circle">
 
             <span class="float-start ps-2">
-              <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(contract.companyContract.company?.user?.base?.id).$absolutePath]">
-                {{contract.companyContract.company?.name}}
+              <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(contract.companyContractObj.company?.user?.base?.id).$absolutePath]">
+                {{contract.companyContractObj.company?.name}}
               </a>
             </span>
           </span>
 
           <span class="ms-2 ps-5 d-block">
-            <span *ngIf="contract.companyContract">
-              {{ contract.companyContract.duration }} days
-            </span>
-            <span *ngIf="contract.patientContract">
-              {{ contract.patientContract.duration }} days
+            <span>
+              {{ contract.patientContractObj.patient?.user?.base?.id | userId }}
             </span>
           </span>
         </td>
@@ -84,11 +81,19 @@
           <span>
             {{ contract.amount | currency: 'N' }}
           </span>
+          <span class="ms-1">
+            <span *ngIf="contract.companyContract">
+              ({{ contract.companyContractObj.duration }} days)
+            </span>
+            <span *ngIf="contract.patientContract">
+              ({{ contract.patientContractObj.duration }} days)
+            </span>
+          </span>
           <span class="d-block" *ngIf="contract.companyContract">
-            {{ contract.companyContract.appCost?.description }}
+            {{ contract.companyContractObj.appCost?.description }}
           </span>
           <span class="d-block" *ngIf="contract.patientContract">
-            {{ contract.patientContract.appCost?.description }}
+            {{ contract.patientContractObj.appCost?.description }}
           </span>
           <span>
 

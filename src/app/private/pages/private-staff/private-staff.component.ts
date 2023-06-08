@@ -3,6 +3,7 @@ import { faClipboardUser, faEllipsisV, faChevronDown } from '@fortawesome/free-s
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppUser, UserFilter } from 'src/app/shared/core/models/app-user';
 import { AppPagination, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
@@ -27,9 +28,11 @@ export class PrivateStaffComponent extends SharedUtilityComponent implements OnI
   paginationRequest = new PaginationRequest<UserFilter>(this.appPagination, this.filter);
   paginationResponse = new PaginationResponse<AppUser[]>();
 
+  roles = AppRoles;
+
   constructor(
     private userService: UserService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
   ) {
     super();
   }
@@ -48,7 +51,7 @@ export class PrivateStaffComponent extends SharedUtilityComponent implements OnI
           this.staff = data.result ?? [];
         },
         error: (error) => {
-          console.log(error);
+          throw error;
         }
       });
     this.subscriptions.push(sub);

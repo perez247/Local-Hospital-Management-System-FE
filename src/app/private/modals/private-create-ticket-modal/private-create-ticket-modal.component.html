@@ -6,4 +6,12 @@
 >
 </app-private-create-pharmacy-ticket-modal>
 
+<app-private-create-lab-ticket-modal
+(saved)="completed()"
+*ngIf="type === 'lab'"
+[ticket]="ticket"
+[appointment]="appointment"
+>
+</app-private-create-lab-ticket-modal>
+
 

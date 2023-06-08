@@ -1,11 +1,11 @@
   <div class="d-flex justify-content-between mb-4">
     <div class="d-flex justify-content-start mb-4 position-relative">
         <span class="p-3 bg-primary shadow position-absolute">
-            <fa-icon [icon]="fonts.faBuilding" class="pe-1 text-light"></fa-icon>
+            <fa-icon [icon]="fonts.faBuilding" class="p-1 text-light"></fa-icon>
         </span>
         <div class="placeholder-glow ms-5 ps-3">
-          <span *ngIf="!company" class="placeholder col-12"></span>
-          <span *ngIf="company" class="h5 me-1">
+          <span *ngIf="!company || isLoading" class="placeholder col-12"></span>
+          <span *ngIf="company && !isLoading" class="h5 me-1">
             {{ company.firstName }}
           </span>
 
@@ -14,6 +14,9 @@
           <span class="d-block">
             <span *ngIf="!company || isLoading" class="placeholder col-6"></span>
             <app-private-company-contract *ngIf="company && !isLoading" [user]="company" (reload)="getCompany(currentSection)" (avaliable)="disableTabs = !$event"></app-private-company-contract>
+            <span *ngIf="company && !isLoading" class="d-block">
+              {{ company.base?.id | userId }}
+            </span>
           </span>
         </div>
 

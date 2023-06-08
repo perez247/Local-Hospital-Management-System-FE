@@ -12,22 +12,33 @@
           <a class="dropdown-item pointer"
           [routerLink]="['/' + routes.privateRoute.single_ticket(ticket?.base?.id).$absolutePath]"
           >View</a></li>
-          <div appHasRole [roles]="[roles.admin, roles.doctor]" [operator]="'or'" *ngIf="!ticket?.sent">
+          <div appHasRole [roles]="[roles.admin, appointment.doctor?.user?.base?.id]" [operator]="'or'" *ngIf="!ticket?.sent && appointment && isTodayAppointment">
             <li><hr class="dropdown-divider"></li>
-            <li><span class="dropdown-item pointer"(click)="confirmSendToDepartment()">Send to department</span></li>
+            <li><span class="dropdown-item pointer"(click)="sendToDepartment()">Send to department</span></li>
+            <li><span class="dropdown-item pointer" (click)="editTicket()" >Edit</span></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><span class="dropdown-item pointer text-danger" (click)="deleteTicket()" >Delete</span></li>
           </div>
-          <!-- <li><hr class="dropdown-divider"></li>
-        <li><span class="dropdown-item pointer">Delete</span></li> -->
+          <div appHasRole [roles]="[roles.admin, roles.doctor]" [operator]="'or'" *ngIf="!appointment">
+            <li><hr class="dropdown-divider"></li>
+            <li><span class="dropdown-item pointer"(click)="sendToDepartment()">Copy ticket</span></li>
+          </div>
       </ul>
     </div>
 
     <strong class="d-block pointer">
       {{ ticket?.base?.dateCreated | date : 'medium' }}
+      | {{ ticket?.appInventoryType }}
     </strong>
   </div>
 
   <div class="card-body">
-    <p class="card-text">{{ ticket?.overallDescription | trimSentence : 200 }}</p>
+    <p class="card-text border-bottom">{{ ticket?.overallDescription | trimSentence : 100 }}</p>
+    <span *ngFor="let inventory of ticket?.ticketInventories">
+      <span class="badge bg-primary me-2">
+        {{ inventory?.inventory?.name }}
+      </span>
+    </span>
   </div>
 
   <div class="card-footer text-muted">

@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { AppConstants } from 'src/app/shared/core/models/app-constants';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppUser } from 'src/app/shared/core/models/app-user';
 import { StaffService } from 'src/app/shared/services/api/staff/staff.service';
 import { CustomErrorService } from 'src/app/shared/services/common/custom-error/custom-error.service';
@@ -28,6 +29,7 @@ export class PrivateStaffDetailsComponent extends SharedUtilityComponent impleme
   disableForm = true;
 
   userSections = AppConstants.UserSections;
+  roles = AppRoles;
 
   constructor(
     private fb: FormBuilder,

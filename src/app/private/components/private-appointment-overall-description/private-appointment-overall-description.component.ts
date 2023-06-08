@@ -17,6 +17,7 @@ export class PrivateAppointmentOverallDescriptionComponent extends SharedUtility
 
   @Input() appointment?: AppAppointment;
   @Input() canEdit?: boolean;
+  @Input() isTodayAppointment? = true;
 
   editableDescription? = '';
 

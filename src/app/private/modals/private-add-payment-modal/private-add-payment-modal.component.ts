@@ -2,7 +2,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { CustomErrorService } from 'src/app/shared/services/common/custom-error/custom-error.service';
 import { ILookUp } from 'src/app/shared/core/models/app-constants';
 import { EventBusService } from 'src/app/shared/services/common/event-bus/event-bus.service';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faDownload, faFileAlt, faTrash, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as saveAs from 'file-saver';
@@ -20,6 +20,7 @@ import { AddPaymentModelView } from 'src/app/shared/core/model-view/add-payment-
 })
 export class PrivateAddPaymentModalComponent implements OnInit {
 
+  @Input() cost?: number;
   @Output() newPayment = new EventEmitter<PaymentMade>();
 
   fonts = { faFileAlt, faTrashAlt, faDownload, faTrash }

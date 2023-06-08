@@ -14,7 +14,7 @@
               Action
           </button>
           <ul class="dropdown-menu" aria-labelledby="more-action">
-            <li><a class="dropdown-item pointer" (click)="saveInventoryItems()" >Save Inventory item</a></li>
+            <li appHasRole [roles]="[roles.admin, inventory?.appInventoryType]" ><a class="dropdown-item pointer" (click)="saveInventoryItems()" >Save Inventory item</a></li>
             <li><a class="dropdown-item pointer" (click)="openFilterInventoryItems()">Filter</a></li>
           </ul>
         </div>

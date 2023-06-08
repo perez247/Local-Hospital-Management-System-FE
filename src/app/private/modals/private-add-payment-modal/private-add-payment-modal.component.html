@@ -2,7 +2,8 @@
 
 <div class="modal-content">
   <div class="modal-header c-bg-primary">
-    <h5 class="modal-title">Add Payment</h5>
+    <h5 *ngIf="cost" class="modal-title">Add Payment {{ cost | currency : 'N' }} </h5>
+    <h5 *ngIf="!cost" class="modal-title">Add Payment</h5>
     <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
       <i class="fas fa-times"></i>
     </button>

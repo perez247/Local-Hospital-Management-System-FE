@@ -41,7 +41,7 @@
       </div>
   </div>
 
-  <div>
+  <div *ngIf="appointment">
 
     <div class="dropdown">
       <span class="p-3 bg-primary shadow pointer" role="button" id="ticketAddMenu" data-bs-toggle="dropdown" aria-expanded="false">
@@ -50,12 +50,13 @@
 
       <ul class="dropdown-menu" aria-labelledby="ticketAddMenu">
         <li appHasRole [roles]="[roles.admin, roles.doctor, roles.nurse]" [operator]="'or'"><a class="dropdown-item" (click)="updateDoctor()" >Change Doctor</a></li>
-        <div appHasRole [roles]="[roles.admin, roles.doctor]" [operator]="'or'">
+        <div *ngIf="appointment.isToday()" appHasRole [roles]="[roles.admin, appointment.doctor?.user?.base?.id]" [operator]="'or'">
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" (click)="openAddNewTicket('pharmacy')">Create Pharmacy Ticket</a></li>
           <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" (click)="openAddNewTicket('lab')">Create Lab Ticket</a></li>
+          <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" (click)="confirmSendAllToDepartment()">Send all tickets to departments</a></li>
-
         </div>
          </ul>
     </div>
@@ -64,4 +65,91 @@
 
 </div>
 
-<app-private-appointment-tickets *ngIf="appointment && !isLoading" [appointment]="appointment" (reload)="getAppointmentByDate()" ></app-private-appointment-tickets>
+<ngb-accordion *ngIf="!isLoading" [activeIds]="currentSection">
+
+  <ngb-panel [id]="userSections.vitals">
+
+		<ng-template ngbPanelTitle>
+			Vitals
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-patient-vitals
+        [isTodayAppointment]="appointment?.isToday()"
+        [user]="appointment?.patient?.user">
+      </app-private-patient-vitals>
+		</ng-template>
+
+	</ngb-panel>
+
+  <ngb-panel [id]="userSections.allergies">
+
+		<ng-template ngbPanelTitle>
+			Allergies
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-patient-allergies
+        [appointment]="appointment"
+        [isTodayAppointment]="appointment?.isToday()"
+        [patient]="appointment?.patient">
+      </app-private-patient-allergies>
+		</ng-template>
+
+	</ngb-panel>
+
+  <ngb-panel [id]="userSections.overallAppointmentDescription">
+
+		<ng-template ngbPanelTitle>
+			Overall Appointment Description
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-appointment-overall-description
+        [appointment]="appointment"
+        [isTodayAppointment]="appointment?.isToday()"
+        [canEdit]="true">
+      </app-private-appointment-overall-description>
+		</ng-template>
+
+	</ngb-panel>
+
+  <ngb-panel [id]="userSections.ticketList" >
+
+		<ng-template ngbPanelTitle>
+			Tickets
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+
+      <app-private-appointment-tickets
+        *ngIf="appointment && !isLoading"
+        [appointment]="appointment"
+        [isTodayAppointment]="appointment.isToday()"
+        (reload)="getAppointmentByDate()" >
+      </app-private-appointment-tickets>
+
+    </ng-template>
+
+	</ngb-panel>
+
+  <ngb-panel [id]="userSections.previousTicketList" >
+
+		<ng-template ngbPanelTitle>
+			Previous Tickets
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+
+      <app-private-previous-tickets
+        *ngIf="appointment && !isLoading"
+        [appointment]="appointment"
+        (reload)="getAppointmentByDate()" >
+      </app-private-previous-tickets>
+
+    </ng-template>
+
+	</ngb-panel>
+
+</ngb-accordion>
+

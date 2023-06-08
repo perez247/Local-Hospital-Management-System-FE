@@ -17,6 +17,10 @@ export class ContractDetailPipe implements PipeTransform {
       return 'Contract pending approval';
     }
 
+    if (value.appCost.patientContract && value.appCost.paymentStatus == 'owing') {
+      return 'Contract pending approval';
+    }
+
     if (value.appCost.paymentStatus == 'pending') {
       return 'Contract pending approval';
     }

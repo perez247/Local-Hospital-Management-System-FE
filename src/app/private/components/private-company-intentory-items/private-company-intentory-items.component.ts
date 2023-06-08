@@ -1,9 +1,11 @@
+import { EventBusService } from './../../../shared/services/common/event-bus/event-bus.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faKitMedical, faNairaSign, faTrash, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { AppConstants } from 'src/app/shared/core/models/app-constants';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppUser } from 'src/app/shared/core/models/app-user';
 import { AppInventory, AppInventoryItem, InventoryItemFilter } from 'src/app/shared/core/models/inventory';
 import { AppPagination, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
@@ -34,17 +36,29 @@ export class PrivateCompanyIntentoryItemsComponent extends SharedUtilityComponen
   paginationRequest = new PaginationRequest<InventoryItemFilter>(this.appPagination, this.filter);
   paginationResponse = new PaginationResponse<any[]>();
 
+  roles = AppRoles;
+
+  ticketRoles: (string | undefined)[] = []
+  lookupType = AppConstants.LookUpType;
+
   constructor(
     private modalService: NgbModal,
-    private inventoryService: InventoryService
+    private inventoryService: InventoryService,
+    private eventBus: EventBusService
     ) {
     super();
   }
 
   override ngOnInit(): void {
+    this.setTicketRoles();
     this.filter.companyId = this.company?.company?.base?.id;
     this.paginationRequest = new PaginationRequest<InventoryItemFilter>(this.appPagination, this.filter);
     this.getInventories();
+  }
+
+  setTicketRoles(): void {
+    this.ticketRoles = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
+    this.ticketRoles?.push(this.roles.admin);
   }
 
   getInventories(): void {

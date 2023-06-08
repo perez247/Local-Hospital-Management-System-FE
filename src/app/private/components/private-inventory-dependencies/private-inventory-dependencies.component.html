@@ -1,0 +1,31 @@
+
+
+<div class="d-flex justify-content-between mb-4">
+  <div class="d-flex justify-content-start align-items-center mb-4">
+      <fa-icon [icon]="fonts.faRotate" [size]="'2x'" class="pe-1 text-primary"></fa-icon>
+      <div>
+        <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+      </div>
+
+  </div>
+  <div>
+      <button class="btn btn-sm btn-primary">Add Dependencies</button>
+  </div>
+</div>
+
+<section class="bg-light rounded shadow">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr *ngFor="let vital of vitals" >
+          <td><a class="text-primary text-underline pointer" (click)="viewVital(vital)" >{{vital?.base?.dateCreated | date:"dd/MMM/yyyy HH:mm"}}</a></td>
+          <td>{{vital?.nurse?.user?.lastName}} {{vital?.nurse?.user?.firstName}}</td>
+        </tr> -->
+      </tbody>
+    </table>
+</section>

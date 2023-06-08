@@ -11,13 +11,13 @@
               </button>
             </div>
             <div class="modal-body c-bg-secondary">
-  
+
               <form [formGroup]="form">
-  
+
                 <div class="row">
-  
+
                   <div class="form-group col-md-6 position-relative">
-  
+
                     <div class="w-100 position-relative">
                       <label class="form-control-label mb-2" for="companyNameField">
                         <strong>Company Name</strong>
@@ -26,34 +26,66 @@
                       <app-shared-user-autocomplete [userType]="'company'" class="position-absolute w-100" [searchWord]="form.get('name')?.value"></app-shared-user-autocomplete>
                       <app-custom-error-message [errorMessage]="errorService.getError(form, 'name')"></app-custom-error-message>
                     </div>
-  
+
                   </div>
-                    
+
                   <div class="form-group col-md-6">
                     <label class="form-control-label mb-2" for="emailField"><strong>Email</strong></label>
                     <input placeholder="Email" maxlength="250" type="email" class="form-control" id="emailField" formControlName="email"  [ngClass]="{'is-invalid': errorService.getError(form, 'email')}">
                     <app-custom-error-message [errorMessage]="errorService.getError(form, 'email')"></app-custom-error-message>
                   </div>
 
-                  
+
                   <div class="form-group col-md-6">
                     <label class="form-control-label mb-2" for="uniqueIdField"><strong>Unique Id</strong></label>
                     <input placeholder="Unique Id" maxlength="1000" type="text" class="form-control" id="uniqueIdField" formControlName="uniqueId"  [ngClass]="{'is-invalid': errorService.getError(form, 'uniqueId')}">
                     <app-custom-error-message [errorMessage]="errorService.getError(form, 'uniqueId')"></app-custom-error-message>
                   </div>
-  
+
                   <div class="form-group col-md-6">
                     <label class="form-control-label mb-2" for="otherIdField"><strong>Other Id</strong></label>
                     <input placeholder="Other Id" maxlength="250" type="text" class="form-control" id="otherIdField" formControlName="otherId"  [ngClass]="{'is-invalid': errorService.getError(form, 'otherId')}">
                     <app-custom-error-message [errorMessage]="errorService.getError(form, 'otherId')"></app-custom-error-message>
                   </div>
-  
+
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label mb-2" for="homeCompanyField"><strong>Home Company</strong></label>
+                    <div class="form-check">
+                      <input formControlName="homeCompany" class="form-check-input" type="radio" name="homeCompany" id="homeCompanyTrue" [value]="true">
+                      <label class="form-check-label" for="homeCompanyTrue">
+                        Yes
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input formControlName="homeCompany" class="form-check-input" type="radio" name="homeCompany" id="homeCompanyFalse" [value]="false">
+                      <label class="form-check-label" for="homeCompanyFalse">
+                        No
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label mb-2" for="forIndividualField"><strong>For Individuals</strong></label>
+                    <div class="form-check">
+                      <input formControlName="forIndividual" class="form-check-input" type="radio" name="forIndividual" id="forIndividualTrue" [value]="true">
+                      <label class="form-check-label" for="forIndividualTrue">
+                        Yes
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input formControlName="forIndividual" class="form-check-input" type="radio" name="forIndividual" id="forIndividualFalse" [value]="false">
+                      <label class="form-check-label" for="forIndividualFalse">
+                        No
+                      </label>
+                    </div>
+                  </div>
+
                   <div class="form-group col-md-12">
                     <label class="form-control-label mb-2" for="addressField"><strong>Address</strong></label>
                     <input placeholder="Address" maxlength="1000" type="text" class="form-control" id="addressField" formControlName="address"  [ngClass]="{'is-invalid': errorService.getError(form, 'address')}">
                     <app-custom-error-message [errorMessage]="errorService.getError(form, 'address')"></app-custom-error-message>
                   </div>
-                  
+
 
                   <div class="form-group col-md-12">
                     <label class="form-control-label mb-2" for="otherIdField"><strong>Description</strong></label>
@@ -61,11 +93,11 @@
                     <app-custom-error-message [errorMessage]="errorService.getError(form, 'description')"></app-custom-error-message>
                     <small class="d-block text-end">{{form.get('description')?.value?.length ?? 0 }}/2000</small>
                   </div>
-  
+
                 </div>
-  
+
               </form>
-  
+
             </div>
             <div class="modal-footer c-bg-primary justify-content-between">
               <button [disabled]="form.invalid || isLoading" (click)="createNewCompany()" type="button" class="btn btn-primary">
@@ -77,4 +109,3 @@
               </div>
             </div>
           </div>
-  

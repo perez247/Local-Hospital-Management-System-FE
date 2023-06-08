@@ -1,0 +1,96 @@
+<div class="card mb-3" [ngClass]="{'bg-info': ticketInventory.appTicketStatus === 'canceled'}" >
+  <div class="card-header">
+    <div class="row">
+      <div class="col-2">
+        <strong>Item</strong>
+      </div>
+      <div class="col-10 row">
+        <div class="col-6">{{ ticketInventory.inventory.name }}</div>
+        <div class="col-6">
+          <select [disabled]="ticket.cost != null" class="form-control" [(ngModel)]="ticketInventory.appTicketStatus">
+            <option [value]="'ongoing'" >Ongoing</option>
+            <option [value]="'canceled'" >Canceled</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-header">
+    <div class="row">
+      <div class="col-2">
+        <strong>Doctor's Prescription</strong>
+      </div>
+      <div class="col-10">
+        {{ ticketInventory.doctorsPrescription }}
+      </div>
+    </div>
+  </div>
+
+  <div class="card-header">
+    <div class="row">
+      <div class="col-2">
+        <strong>Pre-note</strong>
+      </div>
+      <div class="col-10">
+        <textarea [disabled]="this.ticket.sentToFinance" [(ngModel)]="ticketInventory.departmentDescription" type="text" class="form-control"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="this.ticket.sentToFinance">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-2">
+          <strong>Price (N)</strong>
+        </div>
+        <div class="col-10 row">
+          <div class="col-4">
+            <input [value]="this.ticketInventory.currentPrice" step=".01" disabled class="form-control">
+          </div>
+          <div class="col-2">
+            <strong>Concluded Price (N)</strong>
+          </div>
+          <div class="col-4">
+            <input type="number" [disabled]="inventoryItems.length <= 0" [(ngModel)]="this.ticketInventory.totalPrice" step=".01" class="form-control">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="this.ticket.sentToFinance && ticket.cost && ticketInventory.appTicketStatus !== 'canceled'">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-2">
+          <strong>Result</strong>
+        </div>
+        <div class="col-10 row">
+          <div class="col-4">
+            <span *ngIf="!ticketInventory.concludedDate">
+              <fa-icon class="text-warning" [icon]="fonts.faClock"></fa-icon>
+              Pending
+              <fa-icon (click)="addResultModal()" class="text-primary mx-1 pointer" [icon]="fonts.faPencilAlt"></fa-icon>
+            </span>
+            <span *ngIf="ticketInventory.concludedDate">
+              <fa-icon class="text-success" [icon]="fonts.faCheckCircle"></fa-icon>
+              Ready
+              <fa-icon (click)="addResultModal()" class="text-primary mx-1 pointer" [icon]="fonts.faMagnifyingGlass"></fa-icon>
+            </span>
+          </div>
+          <div class="col-2">
+            <strong>Items used</strong>
+          </div>
+          <div class="col-4">
+            <span>{{ticketInventory.itemsUsed?.length ?? 0}}</span>
+            <fa-icon *ngIf="!ticketInventory.concludedDate" (click)="addItemsUsed()" class="text-primary mx-1 pointer" [icon]="fonts.faPencilAlt"></fa-icon>
+            <fa-icon *ngIf="ticketInventory.concludedDate" (click)="addItemsUsed()" class="text-primary mx-1 pointer" [icon]="fonts.faMagnifyingGlass"></fa-icon>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

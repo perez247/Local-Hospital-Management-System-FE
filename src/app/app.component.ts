@@ -1,3 +1,4 @@
+import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { Component, OnInit } from '@angular/core';
 import { ILookUp } from './shared/core/models/app-constants';
 import { AuthService } from './shared/services/api/auth/auth.service';
@@ -10,15 +11,17 @@ import { EventBusService } from './shared/services/common/event-bus/event-bus.se
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent extends SharedUtilityComponent implements OnInit {
 
   constructor(
     private eventBus: EventBusService,
     private authService: AuthService,
     private toast: CustomToastService
-    ) {}
+    ) {
+    super();
+  }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.eventBus.initialize();
     this.setLookUps();
   }
@@ -31,7 +34,7 @@ export class AppComponent implements OnInit {
       },
       error: (error) => {
         this.toast.error('Failed to get lookups, kindly check your internet connection');
-        console.log(error);
+        throw error;
       }
     });
   }

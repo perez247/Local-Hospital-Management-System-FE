@@ -1,0 +1,30 @@
+
+<section class="row">
+
+  <div class="position-relative">
+    <div class="dropdown">
+        <button [disabled]="isLoading" class="btn btn-primary btn-sm text-white dropdown-toggle" type="button" id="more-action" data-bs-toggle="dropdown" aria-expanded="false">
+          <fa-icon [icon]="fonts.faFilter" class="pe-1 text-light"></fa-icon>
+          <span *ngIf="!isLoading" >{{ paginationResponse.totalItems }}</span>
+          <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+        </button>
+        <ul class="dropdown-menu pointer" aria-labelledby="more-action">
+          <li><a class="dropdown-item" (click)="addFilter('all')" >all</a></li>
+          <li *ngFor="let ticketType of ticketTypes" ><a class="dropdown-item" (click)="addFilter(ticketType)" >{{ticketType}}</a></li>
+        </ul>
+      </div>
+  </div>
+
+  <app-private-ticket-inventory-template *ngFor="let tick of tickets; trackBy:ticketTrackBy" [ticket]="tick" ></app-private-ticket-inventory-template>
+
+</section>
+
+<section class="mt-2">
+  <ngb-pagination
+    [(page)]="paginationResponse.pageNumber"
+    [pageSize]="paginationResponse.pageSize"
+    [collectionSize]="paginationResponse.totalItems"
+    (pageChange)="pageChanged($event)"
+    >
+  </ngb-pagination>
+</section>

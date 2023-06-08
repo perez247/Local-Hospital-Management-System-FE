@@ -1,55 +1,56 @@
 
-<section *ngIf="!forIndividual">
+<section *ngIf="!forIndividual && !homeCompany">
 
-<section *ngIf="hasContract">
+  <section *ngIf="hasContract">
 
-  <section *ngIf="hasApproved">
+    <section *ngIf="hasApproved">
 
-    <section *ngIf="expired">
-      <span class="text-danger me-2">User contract has expired</span>
-      <span
+      <section *ngIf="expired">
+        <span class="text-danger me-2">User contract has expired</span>
+        <span
+        (click)="confirmAddContract()"
+        *ngIf="!companyId"
+        class="badge rounded-pill bg-primary pointer ms-2 shadow">Add Contract
+      </span>
+      </section>
+
+      <section *ngIf="!expired">
+        <span class="me-2">{{ startDate?.toDate() | date: 'MMM d, y'}} - {{ endDate?.toDate() | date: 'MMM d, y' }}</span>
+
+        <ng-template #hasContractToolTip>
+            <span *ngIf="iconCss == 'text-warning'"> This contract will soon expire {{daysRemaining}} day(s) remaining </span>
+            <span *ngIf="iconCss == 'text-success'"> {{daysRemaining}} day(s) remaining </span>
+        </ng-template>
+
+        <fa-icon [ngbTooltip]="hasContractToolTip" [icon]="iconStat" class="pe-1" [ngClass]="iconCss"></fa-icon>
+        <span
+            (click)="confirmAddContract()"
+            *ngIf="iconCss == 'text-warning' || iconCss == 'text-danger'"
+            class="badge rounded-pill bg-primary pointer ms-2 shadow">Add Contract
+        </span>
+      </section>
+
+    </section>
+
+    <section *ngIf="!hasApproved">
+      <span class="text-danger me-2">User contract requires approval from finance</span>
+    </section>
+
+  </section>
+
+  <section *ngIf="!hasContract">
+    <span class="text-danger me-2">User contract unavaliable</span>
+
+    <ng-template #notHasContractToolTip>
+        <span>No contract has been created</span>
+    </ng-template>
+
+    <fa-icon [ngbTooltip]="notHasContractToolTip" [icon]="fonts.faTimesCircle" class="pe-1 text-danger"></fa-icon>
+
+    <span
       (click)="confirmAddContract()"
-      *ngIf="!companyId"
       class="badge rounded-pill bg-primary pointer ms-2 shadow">Add Contract
     </span>
-    </section>
-
-    <section *ngIf="!expired">
-      <span class="me-2">{{ startDate?.toDate() | date: 'MMM d, y'}} - {{ endDate?.toDate() | date: 'MMM d, y' }}</span>
-
-      <ng-template #hasContractToolTip>
-          <span *ngIf="iconCss == 'text-warning'"> This contract will soon expire {{daysRemaining}} day(s) remaining </span>
-          <span *ngIf="iconCss == 'text-success'"> {{daysRemaining}} day(s) remaining </span>
-      </ng-template>
-
-      <fa-icon [ngbTooltip]="hasContractToolTip" [icon]="iconStat" class="pe-1" [ngClass]="iconCss"></fa-icon>
-      <span
-          (click)="confirmAddContract()"
-          *ngIf="iconCss == 'text-warning' || iconCss == 'text-danger'"
-          class="badge rounded-pill bg-primary pointer ms-2 shadow">Add Contract
-      </span>
-    </section>
-
   </section>
 
-  <section *ngIf="!hasApproved">
-    <span class="text-danger me-2">User contract requires approval from finance</span>
-  </section>
-
-</section>
-
-<section *ngIf="!hasContract">
-  <span class="text-danger me-2">User contract unavaliable</span>
-
-  <ng-template #notHasContractToolTip>
-      <span>No contract has been created</span>
-  </ng-template>
-
-  <fa-icon [ngbTooltip]="notHasContractToolTip" [icon]="fonts.faTimesCircle" class="pe-1 text-danger"></fa-icon>
-
-  <span
-    (click)="confirmAddContract()"
-    class="badge rounded-pill bg-primary pointer ms-2 shadow">Add Contract
-  </span>
-</section>
 </section>

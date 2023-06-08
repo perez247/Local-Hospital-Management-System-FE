@@ -10,6 +10,7 @@ import { UserService } from 'src/app/shared/services/api/user/user.service';
 import { PrivateFilterPatientsModalComponent } from '../../modals/private-filter-patients-modal/private-filter-patients-modal.component';
 import { PrivateAddAPatientModalComponent } from '../../modals/private-add-a-patient-modal/private-add-a-patient-modal.component';
 import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class PrivatePatientsComponent extends SharedUtilityComponent implements 
 
   constructor(
     private userService: UserService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
   ) {
     super();
   }
@@ -52,7 +53,7 @@ export class PrivatePatientsComponent extends SharedUtilityComponent implements 
           this.patients = data.result ?? [];
         },
         error: (error) => {
-          console.log(error);
+          throw error;
         }
       });
     this.subscriptions.push(sub);

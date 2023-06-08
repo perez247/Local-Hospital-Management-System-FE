@@ -11,6 +11,7 @@ import { CustomToastService } from 'src/app/shared/services/common/custom-toast/
 import { CompanyService } from 'src/app/shared/services/api/company/company.service';
 import { CompanyDetailFunctions } from './private-company-details-functions';
 import { PrivateUploadProfilePictureModalComponent } from '../../modals/private-upload-profile-picture-modal/private-upload-profile-picture-modal.component';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 
 @Component({
   selector: 'app-private-company-details',
@@ -31,6 +32,8 @@ export class PrivateCompanyDetailsComponent extends SharedUtilityComponent imple
   disableForm = true;
 
   userSections = AppConstants.UserSections;
+
+  roles = AppRoles;
 
   constructor(
     private fb: FormBuilder,

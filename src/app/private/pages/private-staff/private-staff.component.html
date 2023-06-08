@@ -17,7 +17,7 @@
                 Action
             </button>
             <ul class="dropdown-menu" aria-labelledby="more-action">
-              <li><a class="dropdown-item" (click)="openAddStaffModal()" >Add Staff</a></li>
+              <li appHasRole [roles]="[roles.admin, roles.hr]" ><a class="dropdown-item" (click)="openAddStaffModal()" >Add Staff</a></li>
               <li><a class="dropdown-item" (click)="openFilterStaff()" >Filter</a></li>
             </ul>
           </div>
@@ -37,13 +37,20 @@
         <tbody>
           <tr *ngFor="let staffItem of staff">
             <!-- <th scope="row"> </th>-->
-            <td>
-              <img appDisplayProfileImage [imgSrc]="staffItem?.profile" class="img-fluid m-auto mini-profile rounded-circle">
-              <a class="ps-2" [routerLink]="['/' + routes.privateRoute.single_staff(staffItem?.base?.id).$absolutePath]" >
-                {{staffItem.firstName}}
-                {{staffItem.lastName}}
-                {{staffItem.otherName}}
-              </a>
+            <td class="d-flex justify-content-start">
+              <div>
+                <img appDisplayProfileImage [imgSrc]="staffItem?.profile" class="img-fluid m-auto mini-profile rounded-circle">
+              </div>
+              <div class="ps-2">
+                <a [routerLink]="['/' + routes.privateRoute.single_staff(staffItem?.base?.id).$absolutePath]" >
+                  {{staffItem.firstName}}
+                  {{staffItem.lastName}}
+                  {{staffItem.otherName}}
+                </a>
+                <span class="d-block">
+                  {{ staffItem.base?.id | userId }}
+                </span>
+              </div>
             </td>
             <td>{{staffItem.staff?.position}}</td>
             <!-- <td>@mdo</td> -->

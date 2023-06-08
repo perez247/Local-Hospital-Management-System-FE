@@ -23,7 +23,6 @@
                       <strong>Inventory Name</strong>
                     </label>
                     <input placeholder="Inventory Name" maxlength="250" type="text" class="form-control" id="companyNameField" formControlName="name"  [ngClass]="{'is-invalid': errorService.getError(form, 'name')}">
-                    <!-- <app-shared-user-autocomplete [userType]="'company'" class="position-absolute w-100" [searchWord]="form.get('name')?.value"></app-shared-user-autocomplete> -->
                     <app-custom-error-message [errorMessage]="errorService.getError(form, 'name')"></app-custom-error-message>
                   </div>
 

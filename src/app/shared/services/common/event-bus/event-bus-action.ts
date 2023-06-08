@@ -11,6 +11,7 @@ export const EventBusActions = {
     menu: 'state:menu',
     lookUps: 'state:lookUps',
   },
+  toast: 'toast'
 };
 
 export class EventBusData<T> {

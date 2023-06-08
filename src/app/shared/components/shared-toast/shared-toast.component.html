@@ -1,0 +1,21 @@
+<div *ngIf="hide">
+  <ngb-toast
+  *ngFor="let toast of toasts"
+  [class]="toast.classname"
+  [autohide]="true"
+  [delay]="toast.delay || 5000"
+  (hidden)="remove(toast)"
+  >
+    <ng-template [ngIf]="false" [ngIfElse]="text">
+      <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
+    </ng-template>
+
+    <ng-template #text>
+      <div class="d-flex align-items-center">
+        <fa-icon [icon]="toast.icon" [class]="toast.classname" class="me-2" [size]="'2x'"></fa-icon>
+        {{ toast.message }}
+      </div>
+    </ng-template>
+  </ngb-toast>
+
+</div>

@@ -35,7 +35,7 @@ export class PrivateAppointmentsByCalendarComponent extends SharedUtilityCompone
   }
 
   override ngOnInit(): void {
-    this.getAppointmentCountByDate();
+    // this.getAppointmentCountByDate();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

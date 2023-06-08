@@ -12,6 +12,8 @@ export class AddCompanyModalFunctions {
       description: [null, [CustomValidator.MaxLength(2000)]],
       uniqueId: [null, [CustomValidator.MaxLength(2000)]],
       otherId: [null, [CustomValidator.MaxLength(2000)]],
+      homeCompany: [false],
+      forIndividual: [false],
     });
   }
 }

@@ -1,3 +1,4 @@
+import { EventBusService } from './../../../shared/services/common/event-bus/event-bus.service';
 import { TicketService } from 'src/app/shared/services/api/ticket/ticket.service';
 import { IConfirmAction, SharedConfirmActionModalComponent } from 'src/app/shared/modals/shared-confirm-action-modal/shared-confirm-action-modal.component';
 import { Component, OnInit } from '@angular/core';
@@ -25,7 +26,7 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
 
   fonts = { faCalendar, faPlus, faGears };
   userSections = AppConstants.UserSections;
-  currentSection = this.userSections.companyDetails;
+  currentSection = this.userSections.vitals;
 
   appointment?: AppAppointment;
   appointments: AppAppointment[] = [];
@@ -45,6 +46,7 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
     private router: Router,
     private toast: CustomToastService,
     private modalService: NgbModal,
+    private eventBus: EventBusService,
     ) {
     super();
   }
@@ -71,7 +73,7 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
 
           this.paginationResponse = data;
           this.appointments = data.result ?? [];
-          this.appointment = this.appointments[0];
+          this.appointment = new AppAppointment(this.appointments[0]);
         },
         error: (error) => {
           throw error;
@@ -87,7 +89,6 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
 
     const sub = modalRef.componentInstance.saved.subscribe({
       next: () => {
-        console.log(this.paginationRequest);
         this.getAppointmentByDate();
       }
     });

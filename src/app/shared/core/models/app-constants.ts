@@ -19,12 +19,16 @@ export class AppConstants {
     userFiles : 'userFiles',
     inventoryDetails: 'inventoryDetails',
     inventoryItems: 'inventoryItems',
+    inventoryDependencies: 'inventoryDependencies',
     companyInventoryItems: 'companyInventoryItems',
     overallDescription: 'overallDescription',
     overallAppointmentDescription: 'overallAppointmentDescription',
     ticketDetail: 'ticketDetail',
     ticketList: 'ticketList',
+    previousTicketList: 'previousTicketList',
     financeInventory: 'financeInventory',
+
+    settingBilling: 'settingBilling',
 
     tickets: {
       pharmacy: `tickets:${AppTicketTypes.pharmacy}`,

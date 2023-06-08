@@ -16,7 +16,7 @@ import { AppRoles } from 'src/app/shared/core/models/app-roles';
 })
 export class PrivateAppointmentsComponent extends SharedUtilityComponent implements OnInit {
 
-  fonts = { faCalendarCheck}
+  fonts = { faCalendarCheck }
 
   displayCalendar = true;
 

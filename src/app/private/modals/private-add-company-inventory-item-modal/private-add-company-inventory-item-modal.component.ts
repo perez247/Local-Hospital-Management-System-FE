@@ -1,3 +1,5 @@
+import { AppRoles } from './../../../shared/core/models/app-roles';
+import { EventBusService } from './../../../shared/services/common/event-bus/event-bus.service';
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -11,6 +13,7 @@ import { InventoryService } from "src/app/shared/services/api/inventory/inventor
 import { CustomErrorService } from "src/app/shared/services/common/custom-error/custom-error.service";
 import { CustomToastService } from "src/app/shared/services/common/custom-toast/custom-toast.service";
 import { AddCompanyInventoryItemModalFunctions } from "./private-add-company-inventory-item-modal-functions";
+import { AppConstants } from 'src/app/shared/core/models/app-constants';
 
 @Component({
   selector: 'app-private-add-company-inventory-item-modal',
@@ -27,11 +30,17 @@ export class PrivateAddCompanyInventoryItemModalComponent extends SharedUtilityC
 
   filter: InventoryFilter = new InventoryFilter();
 
+  currentUser?: AppUser | null;
+
+  lookupType = AppConstants.LookUpType;
+
+  appRoles = AppRoles;
+
   constructor(
     public activeModal: NgbActiveModal,
     private fb: FormBuilder,
     public errorService: CustomErrorService,
-    private router: Router,
+    private eventBus: EventBusService,
     private toast: CustomToastService,
     private inventoryService: InventoryService,
     ) {
@@ -40,6 +49,25 @@ export class PrivateAddCompanyInventoryItemModalComponent extends SharedUtilityC
 
   override ngOnInit(): void {
     this.form = AddCompanyInventoryItemModalFunctions.createForm(this.fb, this.company);
+  }
+
+  setRoleAccess(): void {
+
+    this.currentUser = this.eventBus.getState().user.value;
+
+    const isAdmin = this.currentUser?.userRoles?.find(x => x === this.appRoles.admin);
+
+    if (isAdmin) { return; }
+
+    const roles = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType);
+    const userRoles = this.eventBus.getState().user.value?.userRoles || [];
+
+    userRoles.forEach(x => {
+      let inRole = roles?.find(y => y.name == x);
+      if (inRole) {
+        this.filter.appInventoryType?.push(x);
+      }
+    });
   }
 
   updateInventoryName(inventory: AppInventory): void {

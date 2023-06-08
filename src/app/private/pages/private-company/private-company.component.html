@@ -17,7 +17,7 @@
                 Action
             </button>
             <ul class="dropdown-menu" aria-labelledby="more-action">
-              <li><a class="dropdown-item pointer" (click)="openAddCompanyModal()" >Add Company</a></li>
+              <li appHasRole [roles]="[roles.admin, roles.hr]"><a class="dropdown-item pointer" (click)="openAddCompanyModal()" >Add Company</a></li>
               <li><a class="dropdown-item pointer" (click)="openFilterCompanies()" >Filter</a></li>
             </ul>
           </div>
@@ -36,11 +36,18 @@
         <tbody>
           <tr *ngFor="let company of companies">
             <!-- <th scope="row"> </th>-->
-            <td>
-              <img appDisplayProfileImage [imgSrc]="company?.profile" class="img-fluid m-auto mini-profile">
-              <a class="ps-2" [routerLink]="['/' + routes.privateRoute.single_company(company.base?.id).$absolutePath]" >
-                {{company.firstName}}
-              </a>
+            <td class="d-flex justify-content-start">
+              <div>
+                <img appDisplayProfileImage [imgSrc]="company?.profile" class="img-fluid m-auto mini-profile">
+              </div>
+              <div class="ps-2">
+                <a [routerLink]="['/' + routes.privateRoute.single_company(company.base?.id).$absolutePath]" >
+                  {{company.firstName}}
+                </a>
+                <span class="d-block">
+                  {{ company.base?.id | userId }}
+                </span>
+              </div>
             </td>
             <td>
               <div>
@@ -62,3 +69,4 @@
     >
   </ngb-pagination>
 </section>
+

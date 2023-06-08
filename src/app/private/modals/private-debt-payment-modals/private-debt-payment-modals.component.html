@@ -1,0 +1,96 @@
+
+
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+    <h5 class="modal-title">Add Payment</h5>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <div class="card mb-3">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-4">
+            <strong>Concluded Cost</strong>
+          </div>
+          <div class="col-8">
+            {{ debt | currency: 'N'}}
+          </div>
+        </div>
+      </div>
+      <div class="card-header">
+        <div class="row">
+          <div class="col-4">
+            <strong>Paid</strong>
+          </div>
+          <div class="col-8">
+            {{ paid | currency: 'N'}}
+          </div>
+        </div>
+      </div>
+      <div class="card-header">
+        <div class="row">
+          <div class="col-4">
+            <strong>Owing</strong>
+          </div>
+          <div class="col-8">
+            {{ debt - paid | currency: 'N'}}
+          </div>
+        </div>
+      </div>
+      <div class="card-header">
+        <div class="row">
+          <div class="col-4">
+            <strong>Payer</strong>
+          </div>
+          <div class="col-8">
+            <span *ngIf="isPatient">
+              <a [routerLink]="['/' + routes.privateRoute.single_patient(userId).$absolutePath]" >
+                {{name}}
+              </a>
+            </span>
+            <span *ngIf="!isPatient">
+              <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(userId).$absolutePath]">
+                {{name}}
+              </a>
+            </span>
+            <span>
+              <button *ngIf="!payment" (click)="addPayment()" class=" ms-2 btn btn-sm btn-primary"><small>Add payment</small></button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="payment" class="mt-3">
+      <h4 class="border-bottom">Payment to make</h4>
+      <div class="card">
+        <div class="card-header">
+          <div class="border-bottom">
+            {{ payment.amount | currency: 'N'}} - {{ payment.typeDisplayName }}
+          </div>
+          <div class="input-group">
+            <button (click)="downloadFile(payment.base64String, payment.name)" class="btn btn-outline-success btn-success text-white" type="button">
+              <fa-icon [icon]="fonts.faDownload" class="bg-success rounded text-white"></fa-icon>
+            </button>
+            <input disabled [value]="payment.name" type="text" class="form-control" >
+            <button (click)="removeFromList()" class="btn btn-outline-danger btn-danger text-white" type="button">
+              <fa-icon [icon]="fonts.faTrash" class="bg-danger rounded text-white"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="modal-footer c-bg-primary d-flex justify-content-between">
+    <button (click)="paydebt()" [disabled]="!payment || isLoading" type="button" class="btn btn-primary">
+      Pay debt
+      <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+    </button>
+    <button (click)="activeModal.close()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  </div>
+</div>

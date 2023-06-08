@@ -1,3 +1,4 @@
+import { PayerPayee } from './financial';
 import { Company } from 'src/app/shared/core/models/app-user';
 import { AppUser, Base, Patient, Staff, UserContract } from "./app-user";
 import { AppInventory } from "./inventory";
@@ -14,6 +15,8 @@ export class TicketFilter {
   sentToDepartment?: boolean;
   sentToFinance?: boolean;
   appTicketStatus?: string;
+  paymentStatus?: string[];
+  beforeDateTime?: string;
 }
 
 export interface AppTicket {
@@ -29,8 +32,7 @@ export interface AppTicket {
   ticketInventories: TicketInventory[]
   doctor: Staff
   patient: Patient
-  patientPaying: Patient
-  companyPaying: Company
+  payerPayee: PayerPayee[]
 }
 
 export const AppTicketTypes = {
@@ -67,6 +69,8 @@ export interface TicketInventory {
   admissionStartDate?: string
   admissionEndDate: any
   base: Base
+  pricePerItem: number
+  itemsUsed: AppInventory[]
 }
 
 export interface SurgeryTicketPersonnel {
@@ -96,7 +100,16 @@ export interface AppCost {
   payment: Payment[]
   costType: string
   paymentStatus: string
-  patientContract: UserContract,
-  companyContract: UserContract
+  patientContractObj: UserContract,
+  companyContractObj: UserContract
+  patientContract: boolean,
+  companyContract: boolean
   base: Base
 }
+
+export interface ITicketInventory {
+  doctorsPrescription: string,
+  inventoryId: string,
+  inventoryName: string,
+}
+

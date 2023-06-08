@@ -3,6 +3,7 @@ import { faBuilding, faEllipsisV, faChevronDown } from "@fortawesome/free-solid-
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { finalize } from "rxjs";
 import { SharedUtilityComponent } from "src/app/shared/components/shared-utility/shared-utility.component";
+import { AppRoles } from "src/app/shared/core/models/app-roles";
 import { AppUser, UserFilter } from "src/app/shared/core/models/app-user";
 import { AppPagination, PaginationRequest, PaginationResponse } from "src/app/shared/core/models/pagination";
 import { ApplicationRoutes } from "src/app/shared/core/routes/app-routes";
@@ -27,6 +28,8 @@ export class PrivateCompanyComponent extends SharedUtilityComponent implements O
   filter = new UserFilter('company');
   paginationRequest = new PaginationRequest<UserFilter>(this.appPagination, this.filter);
   paginationResponse = new PaginationResponse<AppUser[]>();
+
+  roles = AppRoles;
 
   constructor(
     private userService: UserService,

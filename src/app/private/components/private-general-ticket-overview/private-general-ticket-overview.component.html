@@ -32,6 +32,9 @@
           {{ticket?.patient?.user?.lastName}}
           {{ticket?.patient?.user?.otherName}}
         </a>
+        <small class="d-block">
+          {{ ticket?.patient?.user?.base?.id | userId }}
+        </small>
         <small class="d-block border-top mt-1 pt-1">
           <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(ticket?.patient?.company?.user?.base?.id).$absolutePath]">
             {{ticket?.patient?.company?.name}}
@@ -56,7 +59,9 @@
       <strong class="px-2 text-primary">|</strong>
       <span> <strong>Sent to department:</strong> {{ ticket?.sent ? 'Yes' : 'No' }} </span>
         <strong class="px-2 text-primary">|</strong>
-      <span> <strong>Sent to finance:</strong> {{ ticket?.sentToFinance ? 'Yes' : 'No' }} ({{ ticket?.cost === null ? 'pending' : 'paid' }})</span>
+      <span> <strong>Sent to finance:</strong> {{ ticket?.sentToFinance ? 'Yes' : 'No' }}
+        ({{ ticket?.cost === null ? 'pending' : ticket?.cost?.paymentStatus }})
+      </span>
     </small>
   </div>
 </div>

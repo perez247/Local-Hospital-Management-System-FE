@@ -1,18 +1,18 @@
 
 <section *ngIf="hasContract">
 
-  <section *ngIf="hasApproved">
+  <span *ngIf="hasApproved">
 
-    <section *ngIf="expired">
+    <span *ngIf="expired">
       <span class="text-danger me-2">User contract has expired</span>
       <span
-      (click)="confirmAddContract()"
-      *ngIf="!companyId"
-      class="badge rounded-pill bg-primary pointer ms-2 shadow">Add Contract
+        (click)="confirmAddContract()"
+        *ngIf="!companyId"
+        class="badge rounded-pill bg-primary pointer ms-2 shadow">Add Contract
+      </span>
     </span>
-    </section>
 
-    <section *ngIf="!expired">
+    <span *ngIf="!expired">
       <span class="me-2">{{ startDate?.toDate() | date: 'MMM d, y'}} - {{ endDate?.toDate() | date: 'MMM d, y' }}</span>
 
       <ng-template #hasContractToolTip>
@@ -29,16 +29,14 @@
         </span>
         <small *ngIf="companyId">Add contract from company</small>
       </span>
-    </section>
+    </span>
 
-  </section>
-
-  <section *ngIf="!hasApproved">
-    <span class="text-danger me-2">User contract requires approval from finance</span>
-  </section>
-  <span *ngIf="hasApproved">
-    <fa-icon (click)="changeCompanyModal()" [icon]="fonts.faArrowRightArrowLeft" class="ps-3 text-primary pointer"></fa-icon>
   </span>
+
+  <span *ngIf="!hasApproved">
+    <span class="text-danger me-2">User contract requires approval from finance</span>
+  </span>
+    <fa-icon (click)="changeCompanyModal()" [icon]="fonts.faArrowRightArrowLeft" class="ps-2 text-primary pointer"></fa-icon>
 
 </section>
 

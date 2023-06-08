@@ -1,3 +1,4 @@
+import { AppFileService } from '../../../shared/services/common/app-file/app-file.service';
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -29,6 +30,7 @@ export class PrivateAddAStaffModalComponent extends SharedUtilityComponent imple
     private router: Router,
     private toast: CustomToastService,
     private staffService: StaffService,
+    private appFileService: AppFileService
     ) {
     super();
   }
@@ -55,7 +57,10 @@ export class PrivateAddAStaffModalComponent extends SharedUtilityComponent imple
     const sub = this.staffService.createStaff(this.form.value)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
-        next: (data) => {
+        next: (data: any) => {
+          if (data.password && data.password.length > 2) {
+            this.appFileService.downloadAsCSV([data], 'user_credentials.csv');
+          }
           this.toast.success('Staff created successfully');
           this.router.navigate([`${this.routes.privateRoute.single_staff(data.userId).$absolutePath}`]);
           this.activeModal.close();

@@ -1,0 +1,63 @@
+
+
+<form [formGroup]="form">
+          <fieldset [disabled]=disableForm>
+              <div class="row">
+
+                  <div class="form-group col-12 position-relative">
+
+                      <div class="w-100 position-relative">
+                      <label class="form-control-label mb-2" for="CompanyRegistrationFeeField">
+                          <strong>Company Registration Fee</strong>
+                      </label>
+                      <input placeholder="Company Registration Fee" type="number" class="form-control" id="CompanyRegistrationFeeField" formControlName="CompanyRegistrationFee"  [ngClass]="{'is-invalid': errorService.getError(form, 'CompanyRegistrationFee')}">
+                      <app-custom-error-message [errorMessage]="errorService.getError(form, 'CompanyRegistrationFee')"></app-custom-error-message>
+                      </div>
+
+                  </div>
+
+                  <div class="form-group col-12 position-relative">
+
+                    <div class="w-100 position-relative">
+                    <label class="form-control-label mb-2" for="PatientRegistrationFeeField">
+                        <strong>Patient Registration Fee</strong>
+                    </label>
+                    <input placeholder="Patient Registration Fee" type="number" class="form-control" id="PatientRegistrationFeeField" formControlName="PatientRegistrationFee"  [ngClass]="{'is-invalid': errorService.getError(form, 'PatientRegistrationFee')}">
+                    <app-custom-error-message [errorMessage]="errorService.getError(form, 'PatientRegistrationFee')"></app-custom-error-message>
+                    </div>
+
+                </div>
+
+                <div class="form-group col-12 position-relative">
+
+                    <div class="w-100 position-relative">
+                    <label class="form-control-label mb-2" for="TaxField">
+                        <strong>Tax</strong>
+                    </label>
+                    <input placeholder="Tax" type="number" class="form-control" id="TaxField" formControlName="Tax"  [ngClass]="{'is-invalid': errorService.getError(form, 'Tax')}">
+                    <app-custom-error-message [errorMessage]="errorService.getError(form, 'Tax')"></app-custom-error-message>
+                    </div>
+
+                </div>
+              </div>
+          </fieldset>
+
+          <div class="row">
+              <div class="col-12">
+
+                  <div appHasRole [roles]="[roles.admin, roles.finance]" [operator]="'or'" class="d-flex justify-content-end" *ngIf="disableForm" >
+                      <button (click)="edit()" class="btn btn-primary">Edit</button>
+                  </div>
+
+                  <div class="d-flex justify-content-between" *ngIf="!disableForm">
+                      <button (click)="beginUpdate()" [disabled]="form.invalid || isLoading" class="btn btn-success">
+                          Update
+                          <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+                      </button>
+
+                      <button (click)="cancelEdit()" class="btn btn-danger">Cancel</button>
+                  </div>
+
+              </div>
+          </div>
+</form>

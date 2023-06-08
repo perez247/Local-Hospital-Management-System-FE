@@ -40,18 +40,30 @@
           <tr *ngFor="let patient of patients">
             <!-- <th scope="row"> </th>-->
             <td>
-              <img appDisplayProfileImage [imgSrc]="patient?.profile" class="img-fluid m-auto mini-profile rounded-circle">
-              <a class="ps-2" [routerLink]="['/' + routes.privateRoute.single_patient(patient.base?.id).$absolutePath]" >
-                {{patient.firstName}}
-                {{patient.lastName}}
-                {{patient.otherName}}
-              </a>
+              <div class="d-flex justify-content-start">
+                <div>
+                  <img appDisplayProfileImage [imgSrc]="patient?.profile" class="img-fluid m-auto mini-profile rounded-circle">
+                </div>
+                <div class="ps-2">
+                  <a [routerLink]="['/' + routes.privateRoute.single_patient(patient.base?.id).$absolutePath]" >
+                    {{patient.firstName}}
+                    {{patient.lastName}}
+                    {{patient.otherName}}
+                  </a>
+                  <span class="d-block">
+                    {{ patient.base?.id | userId }}
+                  </span>
+                </div>
+              </div>
+
             </td>
             <td>
-              {{patient.patient?.company?.name}}
+              <a class="text-info pointer" [routerLink]="['/' + routes.privateRoute.single_company(patient.patient?.company?.userId).$absolutePath]">
+                {{patient.patient?.company?.name}}
+              </a>
               <div>
-                <span *ngIf="patient.patient?.company?.companyContract"> {{ patient.patient?.company?.companyContract | contractDetail }} </span>
-                <span *ngIf="patient.patient?.patientContract"> {{ patient.patient?.patientContract | contractDetail }} </span>
+                <span *ngIf="!patient.patient?.company?.forIndividual && patient.patient?.company?.companyContract"> {{ patient.patient?.company?.companyContract | contractDetail }} </span>
+                <span *ngIf="patient.patient?.company?.forIndividual && patient.patient?.patientContract"> {{ patient.patient?.patientContract | contractDetail }} </span>
                 <span *ngIf="!patient.patient?.patientContract && !patient.patient?.company?.companyContract"> No Contract available </span>
               </div>
             </td>

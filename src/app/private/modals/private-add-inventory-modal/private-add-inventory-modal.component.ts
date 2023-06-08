@@ -5,6 +5,8 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { finalize } from "rxjs";
 import { SharedUtilityComponent } from "src/app/shared/components/shared-utility/shared-utility.component";
 import { ILookUp, AppConstants } from "src/app/shared/core/models/app-constants";
+import { AppRoles } from "src/app/shared/core/models/app-roles";
+import { AppUser } from "src/app/shared/core/models/app-user";
 import { ApplicationRoutes } from "src/app/shared/core/routes/app-routes";
 import { InventoryService } from "src/app/shared/services/api/inventory/inventory.service";
 import { CustomErrorService } from "src/app/shared/services/common/custom-error/custom-error.service";
@@ -26,6 +28,10 @@ export class PrivateAddInventoryModalComponent extends SharedUtilityComponent im
   lookups: ILookUp[] = [];
   lookupType = AppConstants.LookUpType;
 
+  currentUser?: AppUser | null;
+
+  appRoles = AppRoles;
+
   constructor(
     public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -44,7 +50,25 @@ export class PrivateAddInventoryModalComponent extends SharedUtilityComponent im
   }
 
   setLookUp(): void {
-    this.lookups = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType) ?? [];
+    const lookups = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType) ?? [];
+
+    this.currentUser = this.eventBus.getState().user.value;
+
+    const isAdmin = this.currentUser?.userRoles?.find(x => x === this.appRoles.admin);
+
+    if (isAdmin) {
+      this.lookups = lookups;
+      return;
+    }
+
+    const userRoles = this.eventBus.getState().user.value?.userRoles || [];
+
+    userRoles.forEach(x => {
+      let inRole = lookups?.find(y => y.name == x);
+      if (inRole) {
+        this.lookups.push(inRole);
+      }
+    });
   }
 
   createNewInventory(): void {
